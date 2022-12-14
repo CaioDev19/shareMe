@@ -1,4 +1,4 @@
-import { useEffect, useState, Dispatch } from "react"
+import { useEffect, useState, Dispatch, useCallback } from "react"
 
 function getLocalStorageValue<T>(key: string, initialValue: T): any {
   const localStorageString = localStorage.getItem(key)
@@ -27,9 +27,12 @@ export function useLocalStorage<T>(
     return getLocalStorageValue(key, initialValue)
   })
 
-  function remove(): void {
-    localStorage.removeItem(key)
-  }
+  const remove = useCallback(
+    function (): void {
+      localStorage.removeItem(key)
+    },
+    [key]
+  )
 
   useEffect((): void => {
     if (!value) {

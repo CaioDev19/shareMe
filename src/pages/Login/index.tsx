@@ -6,12 +6,15 @@ import {
 } from "react-google-login"
 import backgroundVideo from "../../assets/share.mp4"
 import logoWhite from "../../assets/logowhite.png"
+import { useNavigate } from "react-router-dom"
 
 type GoogleResponse = GoogleLoginResponse | GoogleLoginResponseOffline
 
 export function Login() {
+  const navigate = useNavigate()
+
   function handleLogin(googleResponse: GoogleResponse): void {
-    console.log(googleResponse)
+    navigate("/home")
   }
 
   function handleError(error: any): void {
