@@ -1,14 +1,30 @@
 import { GlobalStyles } from "./global/styles/GlobalStyles"
 import { ThemeProvider } from "styled-components"
 import { theme } from "./global/theme"
-import { Login } from "./pages/Login"
+import { gapi } from "gapi-script"
+import { useEffect } from "react"
+import { MainRoutes } from "./routes/MainRoutes"
+import { BrowserRouter as Router } from "react-router-dom"
 
 function App() {
+  useEffect(() => {
+    function start(): void {
+      gapi.auth2.init({
+        clientId: process.env.REACT_APP_CLIENT_ID,
+        scope: "",
+      })
+    }
+
+    gapi.load("client:auth2", start)
+  }, [])
+
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Login />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <MainRoutes />
+      </ThemeProvider>
+    </Router>
   )
 }
 
