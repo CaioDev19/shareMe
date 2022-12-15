@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom"
 
 function App() {
   useEffect(() => {
-    function start(): void {
+    function start() {
       gapi.auth2.init({
         clientId: process.env.REACT_APP_CLIENT_ID,
         scope: "",

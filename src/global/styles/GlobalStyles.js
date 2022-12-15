@@ -6,4 +6,12 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
+
+  body {
+    font-family: 'Lato', sans-serif;
+  }
+  
+  img {
+    max-width: 100%;
+  }
 `

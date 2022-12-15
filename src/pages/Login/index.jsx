@@ -1,23 +1,21 @@
 import * as Sc from "./style"
-import {
-  GoogleLogin,
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login"
+import { GoogleLogin } from "react-google-login"
 import backgroundVideo from "../../assets/share.mp4"
 import logoWhite from "../../assets/logowhite.png"
 import { useNavigate } from "react-router-dom"
-
-type GoogleResponse = GoogleLoginResponse | GoogleLoginResponseOffline
+import { useUser } from "../../hooks/useUser"
 
 export function Login() {
   const navigate = useNavigate()
+  const [, setUser] = useUser()
 
-  function handleLogin(googleResponse: GoogleResponse): void {
+  function handleLogin(googleResponse) {
+    console.log(typeof setUser)
+    setUser(googleResponse.profileObj)
     navigate("/home")
   }
 
-  function handleError(error: any): void {
+  function handleError(error) {
     console.log(error)
   }
 
