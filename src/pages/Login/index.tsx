@@ -9,13 +9,12 @@ export function Login() {
   const navigate = useNavigate()
   const [, setUser] = useUser()
 
-  function handleLogin(googleResponse) {
-    console.log(typeof setUser)
+  function handleLogin(googleResponse: any): void {
     setUser(googleResponse.profileObj)
     navigate("/home")
   }
 
-  function handleError(error) {
+  function handleError(error: any) {
     console.log(error)
   }
 

@@ -46,14 +46,13 @@ export const UpperContainer = styled.div`
 
 export const Button = styled(StyledButton)`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
 
   svg {
     position: relative;
-    top: 2.2px;
-    font-size: 18px;
+    top: 2.4px;
+    font-size: 1.2rem;
   }
 
   img {

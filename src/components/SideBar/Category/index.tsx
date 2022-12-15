@@ -1,7 +1,12 @@
 import * as Sc from "./style"
 import { Text } from "../../../global/styles/Typography"
 
-export function Category({ name, url }) {
+interface Props {
+  name: string
+  url: string
+}
+
+export function Category({ name, url }: Props) {
   return (
     <Sc.Container>
       <Sc.Image src={url} alt={name} />

@@ -76,7 +76,7 @@ export const categories = [
 
 export function SideBar() {
   const [user] = useUser()
-
+  console.log(user)
   return (
     <Sc.StyledSideBar>
       <Sc.ContentContainer>
@@ -97,11 +97,11 @@ export function SideBar() {
           <Text
             type="span"
             as="span"
-            size="rgl"
+            size="lrg"
             position="left"
             color="black"
           >
-            Discovery categories
+            Discover categories
           </Text>
         </Sc.UpperContainer>
         <Sc.ContainerCategories>
@@ -117,9 +117,9 @@ export function SideBar() {
         </Sc.ContainerCategories>
       </Sc.ContentContainer>
       <Sc.Button size="sml">
-        <img src={user?.imageUrl} alt="dadas" />
+        <img src={user.imageUrl} alt="dadas" />
         <Text type="span" as="span" size="rgl" color="black">
-          {user?.name}
+          {user.name}
         </Text>
         <MdOutlineKeyboardArrowRight />
       </Sc.Button>

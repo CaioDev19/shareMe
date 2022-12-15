@@ -1,6 +1,12 @@
 import styled, { css } from "styled-components"
 
-export const Button = styled.button`
+interface Props {
+  size: string
+  background?: string
+  color?: string
+}
+
+export const Button = styled.button<Props>`
   all: unset;
   box-sizing: border-box;
   cursor: pointer;

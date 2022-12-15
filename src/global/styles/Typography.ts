@@ -1,6 +1,14 @@
 import styled, { css } from "styled-components"
 
-export const Text = styled.p`
+interface Props {
+  type: string
+  weight?: string
+  size?: string
+  position?: string
+  color?: string
+}
+
+export const Text = styled.p<Props>`
   ${(props) => {
     switch (props.type) {
       case "title":

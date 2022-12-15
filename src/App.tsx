@@ -5,10 +5,11 @@ import { gapi } from "gapi-script"
 import { useEffect } from "react"
 import { MainRoutes } from "./routes/MainRoutes"
 import { BrowserRouter as Router } from "react-router-dom"
+import { UserProvider } from "./context/User"
 
 function App() {
   useEffect(() => {
-    function start() {
+    function start(): void {
       gapi.auth2.init({
         clientId: process.env.REACT_APP_CLIENT_ID,
         scope: "",
@@ -22,7 +23,9 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <MainRoutes />
+        <UserProvider>
+          <MainRoutes />
+        </UserProvider>
       </ThemeProvider>
     </Router>
   )
