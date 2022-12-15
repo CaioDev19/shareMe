@@ -1,10 +1,15 @@
 import styled, { css } from "styled-components"
 
+type textType = "title" | "paragraph" | "span"
+type textSize = "sml" | "rgl" | "lrg"
+type textPosition = "left" | "center" | "right"
+type textWeight = "wek" | "str" | "sstr"
+
 interface Props {
-  type: string
-  weight?: string
-  size?: string
-  position?: string
+  type: textType
+  weight?: textWeight
+  size?: textSize
+  position?: textPosition
   color?: string
 }
 

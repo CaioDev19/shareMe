@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components"
 
+type sizeBtn = "sml" | "lrg"
+
 interface Props {
-  size: string
+  size: sizeBtn
   background?: string
   color?: string
 }
