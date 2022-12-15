@@ -2,12 +2,12 @@ import * as Sc from "./style"
 import { GoogleLogin } from "react-google-login"
 import backgroundVideo from "../../assets/share.mp4"
 import logoWhite from "../../assets/logowhite.png"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Navigate } from "react-router-dom"
 import { useUser } from "../../hooks/useUser"
 
 export function Login() {
   const navigate = useNavigate()
-  const [, setUser] = useUser()
+  const [user, setUser] = useUser()
 
   function handleLogin(googleResponse: any): void {
     setUser(googleResponse.profileObj)
@@ -16,6 +16,10 @@ export function Login() {
 
   function handleError(error: any) {
     console.log(error)
+  }
+
+  if (user) {
+    return <Navigate to="/home" />
   }
 
   return (

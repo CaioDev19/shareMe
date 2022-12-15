@@ -76,7 +76,7 @@ export const categories = [
 
 export function SideBar() {
   const [user] = useUser()
-  console.log(user)
+
   return (
     <Sc.StyledSideBar>
       <Sc.ContentContainer>
