@@ -1,6 +1,9 @@
 import { useEffect, useState, Dispatch, useCallback } from "react"
 
-function getLocalStorageValue<T>(key: string, initialValue: T): any {
+function getLocalStorageValue<T>(
+  key: string,
+  initialValue: T | (() => T)
+): T {
   const localStorageString = localStorage.getItem(key)
 
   let localStorageValue: any
@@ -12,7 +15,7 @@ function getLocalStorageValue<T>(key: string, initialValue: T): any {
     return localStorageValue
   }
 
-  if (typeof initialValue === "function") {
+  if (initialValue instanceof Function) {
     return initialValue()
   }
 
@@ -22,7 +25,7 @@ function getLocalStorageValue<T>(key: string, initialValue: T): any {
 export function useLocalStorage<T>(
   key: string,
   initialValue: T
-): [any, Dispatch<any>, () => void] {
+): [T, Dispatch<React.SetStateAction<T>>, () => void] {
   const [value, setValue] = useState(() => {
     return getLocalStorageValue(key, initialValue)
   })

@@ -14,7 +14,7 @@ export function Login() {
     navigate("/home")
   }
 
-  function handleError(error: any) {
+  function handleError(error: any): void {
     console.log(error)
   }
 
