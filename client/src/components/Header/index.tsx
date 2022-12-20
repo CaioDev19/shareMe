@@ -4,7 +4,7 @@ import { useUser } from "../../hooks/useUser"
 import { AiOutlinePlus } from "react-icons/ai"
 
 export function Header() {
-  const [user] = useUser()
+  const { user } = useUser()
 
   return (
     <Sc.Container>
@@ -12,7 +12,7 @@ export function Header() {
         <Sc.SearchIcon as={BiSearchAlt2} />
         <Sc.Input type="text" placeholder="Search" />
         <Sc.WrapperIcons>
-          <Sc.ProfileIcon src={user.imageUrl} />
+          <Sc.ProfileIcon src={user.userData.image} />
           <Sc.AddIconWrapper as="div">
             <Sc.AddIcon as={AiOutlinePlus} />
           </Sc.AddIconWrapper>

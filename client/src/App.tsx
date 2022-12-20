@@ -6,6 +6,12 @@ import { useEffect } from "react"
 import { MainRoutes } from "./routes/MainRoutes"
 import { BrowserRouter as Router } from "react-router-dom"
 import { UserProvider } from "./context/User"
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
 
 function App() {
   useEffect(() => {
@@ -20,14 +26,16 @@ function App() {
   }, [])
 
   return (
-    <Router>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <UserProvider>
-          <MainRoutes />
-        </UserProvider>
-      </ThemeProvider>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <UserProvider>
+            <MainRoutes />
+          </UserProvider>
+        </ThemeProvider>
+      </Router>
+    </QueryClientProvider>
   )
 }
 
