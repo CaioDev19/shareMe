@@ -19,7 +19,12 @@ export async function doesTheUserExist(
       return next()
     }
 
-    if (data.email === email) {
+    const { response: doesEmailExist } = await isInTheDataBase(
+      { email },
+      "user"
+    )
+
+    if (doesEmailExist) {
       return res.status(403).json({ message: "Invalid e-mail" })
     }
 
@@ -41,7 +46,6 @@ export async function doesTheUserExist(
     req.userData = newUser[0]
     return next()
   } catch (error) {
-    console.log(error)
     return res.status(500).json({ message: "Server internal error." })
   }
 }
