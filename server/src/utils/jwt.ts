@@ -1,10 +1,10 @@
-import jwt, { Secret, SignOptions } from "jsonwebtoken"
+import jwt, { Secret, SignOptions, JwtPayload } from "jsonwebtoken"
 
 export function signJwt(
   payLoad: string | object,
   secretKey: Secret,
   options: SignOptions
-) {
+): Promise<string | Error | undefined> {
   return new Promise((resolve, reject) => {
     jwt.sign(payLoad, secretKey, options, (error, token) => {
       if (error) {
@@ -15,7 +15,10 @@ export function signJwt(
   })
 }
 
-export function verifyTokenJwt(token: string, secretKey: Secret) {
+export function verifyTokenJwt(
+  token: string,
+  secretKey: Secret
+): Promise<any> {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secretKey, (error, data) => {
       if (error) {

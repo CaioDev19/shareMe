@@ -1,10 +1,10 @@
 import { Response } from "express"
-import { CustomRequest } from "../interfaces/express"
+import { CustomBodyRequest } from "../interfaces/express"
 import { signJwt } from "../utils/jwt"
 import { User } from "../validators/userSchema"
 
 export async function logUserIn(
-  req: CustomRequest<User>,
+  req: CustomBodyRequest<User>,
   res: Response
 ) {
   const { id } = req.body
@@ -19,7 +19,7 @@ export async function logUserIn(
     )
 
     return res.status(200).json({
-      user: req.userData,
+      user: <User>req.userData,
       token: token,
     })
   } catch (error) {

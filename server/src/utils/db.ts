@@ -1,6 +1,6 @@
 import knex from "../config/dataBase"
 
-type tables = "user"
+type tables = "user" | "category"
 
 interface DbResponse {
   response: boolean

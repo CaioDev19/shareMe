@@ -1,11 +1,11 @@
 import { Response, NextFunction } from "express"
-import { CustomRequest } from "../interfaces/express"
+import { CustomBodyRequest } from "../interfaces/express"
 import { isInTheDataBase } from "../utils/db"
 import { User } from "../validators/userSchema"
 import knex from "../config/dataBase"
 
 export async function doesTheUserExist(
-  req: CustomRequest<User>,
+  req: CustomBodyRequest<User>,
   res: Response,
   next: NextFunction
 ) {
