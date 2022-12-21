@@ -15,13 +15,13 @@ export interface User {
   token: string
 }
 
-export interface IContext<T> {
-  user: T
-  setUser: Dispatch<React.SetStateAction<T>>
+export interface IContext {
+  user: User
+  setUser: Dispatch<React.SetStateAction<User>>
   remove: () => void
 }
 
-export const UserContext = createContext<IContext<User> | null>(null)
+export const UserContext = createContext<IContext | null>(null)
 
 export function UserProvider({ children }: Props) {
   const [user, setUser, remove] = useLocalStorage<User>("user", {
