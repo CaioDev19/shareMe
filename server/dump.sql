@@ -26,3 +26,32 @@ VALUES
 ('Cats', 'https://i.pinimg.com/236x/6c/3c/52/6c3c529e8dadc7cffc4fddedd4caabe1.jpg'),
 ('Dogs', 'https://i.pinimg.com/236x/1b/c8/30/1bc83077e363db1a394bf6a64b071e9f.jpg'),
 ('Other', 'https://i.pinimg.com/236x/2e/63/c8/2e63c82dfd49aca8dccf9de3f57e8588.jpg');
+
+CREATE TABLE post(
+	id SERIAL PRIMARY KEY,
+	image_name VARCHAR(100) NOT NULL,
+	image BYTEA NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	description VARCHAR(280),
+	user_id TEXT NOT NULL,
+	category_id INT NOT NULL,
+	CONSTRAINT fk_user
+		FOREIGN KEY(user_id)
+			REFERENCES "user"(id),
+	CONSTRAINT fk_category
+		FOREIGN KEY(category_id)
+			REFERENCES category(id)
+);
+
+CREATE TABLE comment(
+	id SERIAL PRIMARY KEY,
+	description VARCHAR(280),
+	user_id TEXT NOT NULL,
+	post_id INT NOT NULL,
+	CONSTRAINT fk_user
+		FOREIGN KEY(user_id)
+			REFERENCES "user"(id),
+	CONSTRAINT fk_post
+		FOREIGN KEY(post_id)
+			REFERENCES post(id)
+);
