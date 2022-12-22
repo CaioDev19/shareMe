@@ -25,7 +25,7 @@ export async function makePost(
     const newPost = await knex<newPost>("post")
       .insert({
         title,
-        image_name: req.file!.filename,
+        image_name: req.file!.originalname,
         image: imageBuffer,
         description: description && description,
         user_id: req.loggedUser.id,
