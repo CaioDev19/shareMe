@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express"
 import { CustomBodyRequest } from "../interfaces/express"
 import { isInTheDataBase } from "../utils/db"
-import { User } from "../validators/userSchema"
+import { User } from "../interfaces/db"
 import knex from "../config/dataBase"
 
 export async function doesTheUserExist(
@@ -11,7 +11,10 @@ export async function doesTheUserExist(
 ) {
   const { id, email, name, image } = req.body
 
-  const { response, data } = await isInTheDataBase({ id }, "user")
+  const { response, data } = await isInTheDataBase<User>(
+    { id },
+    "user"
+  )
 
   try {
     if (response) {
@@ -19,7 +22,7 @@ export async function doesTheUserExist(
       return next()
     }
 
-    const { response: doesEmailExist } = await isInTheDataBase(
+    const { response: doesEmailExist } = await isInTheDataBase<User>(
       { email },
       "user"
     )

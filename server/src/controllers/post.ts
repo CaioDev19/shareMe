@@ -1,28 +1,21 @@
 import { Response } from "express"
 import knex from "../config/dataBase"
 import { CustomBodyRequest } from "../interfaces/express"
-import { Post } from "../validators/postSchema"
-import { convertToBase64 } from "../utils/bufferToString"
-import sharp from "sharp"
+import { ValidationPost } from "../validators/postSchema"
+import { convertToBase64 } from "../utils/convert"
+import { deleteFile, compressFile } from "../utils/file"
+import { Post } from "../interfaces/db"
 
-type newPost = Post & {
-  image_name: string
-  image: Buffer | string
-  user_id: string
-}
 export async function makePost(
-  req: CustomBodyRequest<Post>,
+  req: CustomBodyRequest<ValidationPost>,
   res: Response
 ) {
   const { title, description, category_id } = req.body
 
   try {
-    const imageBuffer = await sharp(req.file!.path)
-      .resize({ width: 1200 })
-      .toFormat("jpg", { quality: 80 })
-      .toBuffer()
+    const imageBuffer = await compressFile(req.file!.path)
 
-    const newPost = await knex<newPost>("post")
+    const newPost = await knex<Post>("post")
       .insert({
         title,
         image_name: req.file!.originalname,
@@ -30,6 +23,7 @@ export async function makePost(
         description: description && description,
         user_id: req.loggedUser.id,
         category_id,
+        category_name: req.categoryName,
       })
       .returning("*")
 
@@ -41,9 +35,13 @@ export async function makePost(
 
     newPost[0].image = convertToBase64(<Buffer>newPost[0].image)
 
-    return res.status(201).json(newPost)
-  } catch (error) {
-    console.log(error)
-    return res.status(500).send()
+    res.status(201).json({
+      ...newPost[0],
+      category_name: req.category_name,
+    })
+    deleteFile(req.file!.path)
+    return
+  } catch {
+    return res.status(500).json({ message: "Server internal error." })
   }
 }

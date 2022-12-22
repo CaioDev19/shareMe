@@ -2,22 +2,22 @@ import knex from "../config/dataBase"
 
 type tables = "user" | "category"
 
-interface DbResponse {
+interface DbResponse<T> {
   response: boolean
-  data?: any
+  data?: T
 }
 
-export async function isInTheDataBase(
+export async function isInTheDataBase<T extends object>(
   data: object,
   table: tables
-): Promise<DbResponse> {
+): Promise<DbResponse<T>> {
   try {
     const queryRes = await knex(table).where(data)
 
     if (queryRes.length > 0) {
       return {
         response: true,
-        data: queryRes[0],
+        data: <T>queryRes[0],
       }
     }
 

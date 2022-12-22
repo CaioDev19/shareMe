@@ -1,7 +1,7 @@
 import { Response } from "express"
 import { CustomBodyRequest } from "../interfaces/express"
 import { signJwt } from "../utils/jwt"
-import { User } from "../validators/userSchema"
+import { User } from "../interfaces/db"
 
 export async function logUserIn(
   req: CustomBodyRequest<User>,

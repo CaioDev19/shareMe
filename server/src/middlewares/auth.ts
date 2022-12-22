@@ -2,6 +2,7 @@ import { verifyTokenJwt } from "../utils/jwt"
 import { isInTheDataBase } from "../utils/db"
 import { NextFunction, Response } from "express"
 import { CustomRequest } from "../interfaces/express"
+import { User } from "../interfaces/db"
 
 export async function checkToken(
   req: CustomRequest,
@@ -27,7 +28,7 @@ export async function checkToken(
         .json({ message: "Server internal error." })
     }
 
-    const { data, response } = await isInTheDataBase(
+    const { data, response } = await isInTheDataBase<User>(
       { id: payLoad.id },
       "user"
     )

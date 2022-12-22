@@ -9,4 +9,4 @@ export const postSchmea = z.object({
   file: z.record(z.any()),
 })
 
-export type Post = z.infer<typeof postSchmea>["body"]
+export type ValidationPost = z.infer<typeof postSchmea>["body"]
