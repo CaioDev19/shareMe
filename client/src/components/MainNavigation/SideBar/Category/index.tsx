@@ -1,5 +1,5 @@
 import * as Sc from "./style"
-import { Text } from "../../../global/styles/Typography"
+import { Text } from "../../../../global/styles/Typography"
 
 interface Props {
   name: string

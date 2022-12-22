@@ -3,6 +3,8 @@ import { Login } from "../pages/Login"
 import { Navigate } from "react-router-dom"
 import { Home } from "../pages/Home"
 import { PrivateRoutes } from "../utils/PrivateRoutes"
+import { CreatePost } from "../pages/CreatePost"
+import { MainNavigation } from "../components/MainNavigation"
 
 export function MainRoutes() {
   return (
@@ -11,7 +13,10 @@ export function MainRoutes() {
       <Route path="/" element={<Navigate to="/login" />} />
 
       <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={<Home />} />
+        <Route element={<MainNavigation />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/create_post" element={<CreatePost />} />
+        </Route>
       </Route>
     </Routes>
   )

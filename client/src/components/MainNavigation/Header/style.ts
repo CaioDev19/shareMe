@@ -1,16 +1,11 @@
 import styled from "styled-components"
 
-export const Container = styled.div`
-  width: 85vw;
-  padding: 1.25rem;
-
-  height: 100vh;
-`
-
-export const WrapperHeader = styled.div`
+export const Container = styled.header`
   position: relative;
   display: flex;
   gap: 0.85rem;
+
+  margin-bottom: 2.5rem;
 `
 
 export const WrapperIcons = styled.div`
@@ -48,7 +43,7 @@ export const Input = styled.input`
   padding: 0.75rem 2.2rem;
   border-radius: 5px;
 
-  background-color: #fafafa;
+  background-color: ${({ theme }) => theme.COLORS.whitesh};
 
   flex-grow: 1;
 

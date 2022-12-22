@@ -5,3 +5,9 @@ export const Container = styled.div`
   display: flex;
   gap: 0.5rem;
 `
+export const RightContentWrapper = styled.div`
+  width: 85vw;
+  height: 100vh;
+
+  padding: 1.25rem;
+`

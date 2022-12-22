@@ -11,6 +11,7 @@ export const theme = {
     beige: "#F5EDDC",
 
     white: "#FFF",
+    whitesh: "#fafafa",
     black: "#000",
   },
   FONT_SIZE: {

@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import { Button as StyledButton } from "../../global/styles/Button"
+import { Button as StyledButton } from "../../../global/styles/Button"
 
 export const StyledSideBar = styled.div`
-  background-color: #fafafa;
+  background-color: ${({ theme }) => theme.COLORS.whitesh};
 
   width: 14.5rem;
   height: 100vh;
