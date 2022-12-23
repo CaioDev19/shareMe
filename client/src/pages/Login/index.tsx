@@ -4,25 +4,27 @@ import backgroundVideo from "../../assets/share.mp4"
 import logoWhite from "../../assets/logowhite.png"
 import { useNavigate, Navigate } from "react-router-dom"
 import { useUser } from "../../hooks/useUser"
-import { useMutation } from "@tanstack/react-query"
-import * as api from "../../services/api"
+import { UserApi } from "../../services/api"
+import { AxiosResponse } from "axios"
+import { useLogIn } from "../../hooks/query/useLogIn"
 
 export function Login() {
   const navigate = useNavigate()
   const { user, setUser } = useUser()
 
-  const { mutate } = useMutation(api.logIn, {
-    onSuccess: (response) => {
-      setUser({
-        userData: response.data.user,
-        token: response.data.token,
-      })
-      navigate("/home")
-    },
-    onError: () => {
-      navigate("/login")
-    },
-  })
+  function handleLogInSucess(response: AxiosResponse<UserApi>): void {
+    setUser({
+      userData: response.data.user,
+      token: response.data.token,
+    })
+    navigate("/home")
+  }
+
+  function handleLogInError(error: any): void {
+    console.log("error")
+  }
+
+  const { mutate } = useLogIn(handleLogInSucess, handleLogInError)
 
   function handleLogin(googleResponse: any): void {
     interface Iuser {
@@ -42,7 +44,7 @@ export function Login() {
     mutate(newUser)
   }
 
-  function handleError(error: any): void {
+  function handleGoogleError(error: any): void {
     console.log(error)
   }
 
@@ -66,7 +68,7 @@ export function Login() {
           clientId={`${process.env.REACT_APP_CLIENT_ID}`}
           buttonText="Login com Google"
           onSuccess={handleLogin}
-          onFailure={handleError}
+          onFailure={handleGoogleError}
           cookiePolicy="single_host_origin"
         />
       </Sc.Container>

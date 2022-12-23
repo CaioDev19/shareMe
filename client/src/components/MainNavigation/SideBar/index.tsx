@@ -5,16 +5,16 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md"
 import { Text } from "../../../global/styles/Typography"
 import { Category } from "./Category"
 import { useUser } from "../../../hooks/useUser"
-import { useQueryClient } from "@tanstack/react-query"
-import { AxiosResponse } from "axios"
-import { Category as ICategory } from "../../../services/api"
+import { Navigate } from "react-router-dom"
+import { useCategories } from "../../../hooks/query/useCategories"
 
 export function SideBar() {
   const { user } = useUser()
-  const queryClient = useQueryClient()
-  const categories = queryClient.getQueryData<
-    AxiosResponse<ICategory[]>
-  >(["category"])
+  const { data: response, isLoading, shouldSignOut } = useCategories()
+
+  if (shouldSignOut) {
+    return <Navigate to="/login" />
+  }
 
   return (
     <Sc.StyledSideBar>
@@ -44,15 +44,16 @@ export function SideBar() {
           </Text>
         </Sc.UpperContainer>
         <Sc.ContainerCategories>
-          {categories?.data.map((category) => {
-            return (
-              <Category
-                name={category.name}
-                url={category.image}
-                key={category.id}
-              />
-            )
-          })}
+          {!isLoading &&
+            response?.data.map((category) => {
+              return (
+                <Category
+                  name={category.name}
+                  url={category.image}
+                  key={category.id}
+                />
+              )
+            })}
         </Sc.ContainerCategories>
       </Sc.ContentContainer>
       <Sc.Button size="sml">

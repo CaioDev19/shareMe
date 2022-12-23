@@ -1,16 +1,13 @@
 import { useUser } from "../../hooks/useUser"
 import { useEffect } from "react"
 import { api } from "../../services/api"
-import { listCategories } from "../../services/api"
 import * as Sc from "./style"
 import { Header } from "./Header"
 import { SideBar } from "./SideBar"
 import { Outlet } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
 
 export function MainNavigation() {
   const { user } = useUser()
-  const { data: response } = useQuery(["category"], listCategories)
 
   useEffect(() => {
     api.defaults.headers.common[

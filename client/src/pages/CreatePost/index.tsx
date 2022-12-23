@@ -2,18 +2,22 @@ import * as Sc from "./style"
 import { Input } from "../../components/Form/Input"
 import { Text } from "../../global/styles/Typography"
 import { useUser } from "../../hooks/useUser"
-import { useQueryClient } from "@tanstack/react-query"
 import { Select } from "../../components/Form/Select"
-import { Category } from "../../services/api"
-import { AxiosResponse } from "axios"
+import { useCategories } from "../../hooks/query/useCategories"
+import { Navigate } from "react-router-dom"
 
 export function CreatePost() {
   const { user } = useUser()
-  const queryClient = useQueryClient()
-  const categories = queryClient.getQueryData<
-    AxiosResponse<Category[]>
-  >(["category"])
-  console.log(categories)
+  const {
+    data: categories,
+    isSuccess,
+    shouldSignOut,
+  } = useCategories()
+
+  if (shouldSignOut) {
+    return <Navigate to="/login" />
+  }
+
   return (
     <Sc.CardContainer>
       <Sc.LeftContent>batata</Sc.LeftContent>
@@ -46,10 +50,9 @@ export function CreatePost() {
           type="text"
           placeholder="Select Category"
         />
-        {/*  <Select
-          name="category"
-          options={categories?.data}
-        /> */}
+        {isSuccess && (
+          <Select name="category" options={categories.data} />
+        )}
       </Sc.RightContent>
     </Sc.CardContainer>
   )
