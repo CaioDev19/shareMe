@@ -18,6 +18,7 @@ export const theme = {
     sml: "0.87rem",
     rgl: "1rem",
     lrg: "1.3rem",
+    exl: "1.8rem",
   },
   FONT_WEIGHT: {
     wek: "400",
@@ -30,3 +31,8 @@ export const theme = {
     lrg: "1.3rem",
   },
 }
+
+export type Colors = keyof typeof theme.COLORS
+export type FontSize = keyof typeof theme.FONT_SIZE
+export type FontWeight = keyof typeof theme.FONT_WEIGHT
+export type Spacers = keyof typeof theme.SPACERS

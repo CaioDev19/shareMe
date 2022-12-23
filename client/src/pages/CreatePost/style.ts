@@ -6,7 +6,7 @@ export const CardContainer = styled.div`
   min-width: 620px;
 
   margin: 0 auto;
-  padding: 1.25rem 1rem;
+  padding: 1.45rem 1rem;
 
   background-color: ${({ theme }) => theme.COLORS.whitesh};
 
@@ -25,4 +25,16 @@ export const RightContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+`
+
+export const WrapperUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
 `

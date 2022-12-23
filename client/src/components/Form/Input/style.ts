@@ -1,9 +1,7 @@
 import styled from "styled-components"
 
-type textSize = "sml" | "rgl" | "lrg"
-
 interface Props {
-  size?: textSize
+  size?: string
 }
 
 export const StyledInput = styled.input<Props>`
@@ -17,10 +15,10 @@ export const StyledInput = styled.input<Props>`
 
   &::placeholder {
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 900;
     font-size: ${({ theme, size }) =>
       size ? theme.FONT_SIZE[size] : theme.FONT_SIZE.rgl};
-    color: ${({ theme }) => theme.COLORS.gray_200};
+    color: ${({ theme }) => theme.COLORS.black};
     line-height: 2.1rem;
     opacity: 0.5;
   }

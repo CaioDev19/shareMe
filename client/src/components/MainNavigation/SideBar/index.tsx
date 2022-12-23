@@ -5,15 +5,16 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md"
 import { Text } from "../../../global/styles/Typography"
 import { Category } from "./Category"
 import { useUser } from "../../../hooks/useUser"
-import { useQuery } from "@tanstack/react-query"
-import * as api from "../../../services/api"
+import { useQueryClient } from "@tanstack/react-query"
+import { AxiosResponse } from "axios"
+import { Category as ICategory } from "../../../services/api"
 
 export function SideBar() {
   const { user } = useUser()
-  const { data: response, isLoading } = useQuery(
-    ["category"],
-    api.listCategories
-  )
+  const queryClient = useQueryClient()
+  const categories = queryClient.getQueryData<
+    AxiosResponse<ICategory[]>
+  >(["category"])
 
   return (
     <Sc.StyledSideBar>
@@ -43,16 +44,15 @@ export function SideBar() {
           </Text>
         </Sc.UpperContainer>
         <Sc.ContainerCategories>
-          {!isLoading &&
-            response?.data.map((category) => {
-              return (
-                <Category
-                  name={category.name}
-                  url={category.image}
-                  key={category.id}
-                />
-              )
-            })}
+          {categories?.data.map((category) => {
+            return (
+              <Category
+                name={category.name}
+                url={category.image}
+                key={category.id}
+              />
+            )
+          })}
         </Sc.ContainerCategories>
       </Sc.ContentContainer>
       <Sc.Button size="sml">

@@ -1,11 +1,10 @@
 import styled, { css } from "styled-components"
-
-type sizeBtn = "sml" | "lrg"
+import { FontSize, Colors } from "../theme"
 
 interface Props {
-  size: sizeBtn
-  background?: string
-  color?: string
+  size: FontSize
+  background?: Colors
+  color?: Colors
 }
 
 export const Button = styled.button<Props>`

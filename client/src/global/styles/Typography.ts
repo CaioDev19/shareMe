@@ -1,16 +1,15 @@
 import styled, { css } from "styled-components"
+import { FontSize, FontWeight, Colors } from "../theme"
 
 type textType = "title" | "paragraph" | "span"
-type textSize = "sml" | "rgl" | "lrg"
 type textPosition = "left" | "center" | "right"
-type textWeight = "wek" | "str" | "sstr"
 
 interface Props {
   type: textType
-  weight?: textWeight
-  size?: textSize
+  weight?: FontWeight
+  size?: FontSize
   position?: textPosition
-  color?: string
+  color?: Colors
 }
 
 export const Text = styled.p<Props>`
