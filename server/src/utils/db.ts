@@ -7,7 +7,7 @@ interface DbResponse<T> {
   data?: T
 }
 
-export async function isInTheDataBase<T extends object>(
+export async function isInTheDataBase<T>(
   data: object,
   table: tables
 ): Promise<DbResponse<T>> {
