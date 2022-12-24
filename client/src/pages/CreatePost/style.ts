@@ -28,6 +28,8 @@ export const InnerWrapper = styled.label<{ noPadding: boolean }>`
   width: 92%;
   height: 100%;
 
+  cursor: ${({ noPadding }) => !noPadding && "pointer"};
+
   margin: 0 auto;
   padding: ${({ noPadding }) => (noPadding ? "0" : "0 0.75rem")};
 
