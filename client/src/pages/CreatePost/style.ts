@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { Form as StyledForm } from "../../components/Form"
 import { Button as StyledButton } from "../../global/styles/Button"
+import { Input as StyledInput } from "../../components/Form/Input"
 
 export const Form = styled(StyledForm)`
   width: 80%;
@@ -23,12 +24,12 @@ export const LeftContent = styled.div`
   background-color: ${({ theme }) => theme.COLORS.gray};
 `
 
-export const InnerWrapper = styled.label`
+export const InnerWrapper = styled.label<{ noPadding: boolean }>`
   width: 92%;
   height: 100%;
 
   margin: 0 auto;
-  padding: 0 0.75rem;
+  padding: ${({ noPadding }) => (noPadding ? "0" : "0 0.75rem")};
 
   border: 2px dotted ${({ theme }) => theme.COLORS.gray_100};
 
@@ -36,13 +37,36 @@ export const InnerWrapper = styled.label`
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+
+  position: relative;
 `
 
-export const FileInput = styled.input`
+export const TrashCanContainer = styled.div`
+  position: absolute;
+  bottom: 0.75em;
+  right: 1rem;
+
+  background-color: ${({ theme }) => theme.COLORS.white};
+  padding: 0.75rem 1rem;
+
+  border-radius: 50%;
+  cursor: pointer;
+
+  svg {
+    font-size: ${({ theme }) => theme.FONT_SIZE.sml};
+  }
+`
+export const Input = styled(StyledInput)`
   all: unset;
   width: 0;
   height: 0;
 `
+
+export const ImageUploaded = styled.img`
+  width: 100%;
+  height: 100%;
+`
+
 export const IconContainer = styled.div`
   display: flex;
   flex-direction: column;

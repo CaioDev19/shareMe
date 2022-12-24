@@ -7,9 +7,11 @@ import { Category } from "./Category"
 import { useUser } from "../../../hooks/useUser"
 import { Navigate } from "react-router-dom"
 import { useCategories } from "../../../hooks/query/useCategories"
+import { useNavigate } from "react-router-dom"
 
 export function SideBar() {
   const { user } = useUser()
+  const navigate = useNavigate()
   const { data: response, isLoading, shouldSignOut } = useCategories()
 
   if (shouldSignOut) {
@@ -29,6 +31,8 @@ export function SideBar() {
               size="rgl"
               position="left"
               color="gray_200"
+              pointer
+              onClick={() => navigate("/home")}
             >
               Home
             </Text>

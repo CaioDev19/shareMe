@@ -1,12 +1,12 @@
 import * as Sc from "./style"
 import { Category } from "../../../services/api"
 import { Controller } from "react-hook-form"
-import { Control, FieldValues } from "react-hook-form/dist/types"
+import { Control } from "react-hook-form/dist/types"
 
 interface Props {
   options: Category[]
   name: string
-  control: Control<FieldValues, any>
+  control: Control<any, any>
   label?: string
 }
 
@@ -26,7 +26,6 @@ export function Select({ options, name, label, control }: Props) {
                 onChange={onChange}
                 value={value}
                 ref={ref}
-                defaultValue=""
               >
                 <option value="" disabled>
                   Select Category
@@ -58,7 +57,6 @@ export function Select({ options, name, label, control }: Props) {
             onChange={onChange}
             value={value}
             ref={ref}
-            defaultValue=""
           >
             <option value="" disabled>
               Select Category

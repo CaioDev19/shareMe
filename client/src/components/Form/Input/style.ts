@@ -23,6 +23,10 @@ export const StyledInput = styled.input<Props>`
     opacity: 0.5;
   }
 
+  &:focus {
+    border-bottom: 1px solid ${({ theme }) => theme.COLORS.black};
+  }
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

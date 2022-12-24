@@ -9,31 +9,38 @@ import { IoCloudUploadOutline } from "react-icons/io5"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { postSchema } from "../../utils/validators/postSchema"
-import { useMutation } from "@tanstack/react-query"
-import * as api from "../../services/api"
+import { Category } from "../../services/api"
+import { NewPost } from "../../utils/validators/postSchema"
+import { useState } from "react"
+import { FaTrash } from "react-icons/fa"
+import { useCreatePost } from "../../hooks/query/useCreatePost"
 
 export function CreatePost() {
   const { user } = useUser()
+  const [imageBackground, setimageBackground] = useState<string>("")
   const {
     data: categories,
     isSuccess,
     shouldSignOut,
   } = useCategories()
-  const { handleSubmit, control, register } = useForm({
+  const { handleSubmit, control, watch, resetField } = useForm({
     resolver: zodResolver(postSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      category: "",
+      image: [],
+    } as NewPost,
   })
-  const { mutate } = useMutation(api.createPost, {
-    onSuccess: (data) => {
-      console.log(data)
-    },
-  })
+  const { mutate } = useCreatePost()
 
-  function handleData(data: any) {
+  function handleData(data: NewPost) {
     const { id: categoryId } = categories?.data.find((category) => {
       return category.name === data.category
-    }) as api.Category
+    }) as Category
 
     const formData = new FormData()
+
     formData.append("image", data.image[0])
     formData.append(
       "data",
@@ -51,6 +58,29 @@ export function CreatePost() {
     console.log(error)
   }
 
+  function addImageBackground(): void {
+    const image = watch("image")
+
+    if (image.length === 0) {
+      return
+    }
+
+    const reader = new FileReader()
+
+    reader.readAsDataURL(image[0])
+    reader.onload = function () {
+      const fileContent = reader.result
+      setimageBackground(`${fileContent}`)
+    }
+  }
+
+  function deleteImageBackground(e: any): void {
+    e.preventDefault()
+
+    setimageBackground("")
+    resetField("image")
+  }
+
   if (shouldSignOut) {
     return <Navigate to="/login" />
   }
@@ -58,24 +88,40 @@ export function CreatePost() {
   return (
     <Sc.Form onSubmit={handleSubmit(handleData, handleError)}>
       <Sc.LeftContent>
-        <Sc.InnerWrapper>
-          <Sc.IconContainer>
-            <IoCloudUploadOutline />
-            <Text type="span" as="span" size="rgl" weight="str">
-              Click to upload
-            </Text>
-          </Sc.IconContainer>
-          <Text
-            type="paragraph"
-            as="p"
-            size="rgl"
-            color="gray_200"
-            position="left"
-          >
-            Recommendation: Use high-quality JPG, JPEG, SVG, PNG, GIF
-            or TIFF less than 20MB
-          </Text>
-          <Sc.FileInput type="file" {...register("image")} />
+        <Sc.InnerWrapper noPadding={!!imageBackground}>
+          {!imageBackground ? (
+            <>
+              <Sc.IconContainer>
+                <IoCloudUploadOutline />
+                <Text type="span" as="span" size="rgl" weight="str">
+                  Click to upload
+                </Text>
+              </Sc.IconContainer>
+              <Text
+                type="paragraph"
+                as="p"
+                size="rgl"
+                color="gray_200"
+                position="left"
+              >
+                Recommendation: Use high-quality JPG, JPEG, SVG, PNG,
+                GIF or TIFF less than 20MB
+              </Text>
+            </>
+          ) : (
+            <>
+              <Sc.ImageUploaded src={imageBackground} />
+              <Sc.TrashCanContainer onClick={deleteImageBackground}>
+                <FaTrash />
+              </Sc.TrashCanContainer>
+            </>
+          )}
+          <Sc.Input
+            type="file"
+            name="image"
+            control={control}
+            handleChange={addImageBackground}
+          />
         </Sc.InnerWrapper>
       </Sc.LeftContent>
       <Sc.RightContent>

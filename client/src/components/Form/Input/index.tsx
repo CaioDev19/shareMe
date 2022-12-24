@@ -1,14 +1,15 @@
 import * as Sc from "./style"
 import { Controller } from "react-hook-form"
-import { Control, FieldValues } from "react-hook-form/dist/types"
+import { Control } from "react-hook-form/dist/types"
 
 interface Props {
   name: string
   type: string
-  control: Control<FieldValues, any>
+  control: Control<any, any>
   placeholder?: string
   className?: string
   size?: any
+  handleChange?: () => void
 }
 
 export function Input({
@@ -18,12 +19,12 @@ export function Input({
   size,
   control,
   className,
+  handleChange,
 }: Props) {
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue=""
       render={({ field: { onChange, value, ref, name } }) => {
         return (
           <Sc.StyledInput
@@ -31,8 +32,17 @@ export function Input({
             type={type}
             placeholder={placeholder}
             name={name}
-            onChange={onChange}
-            value={value}
+            onChange={
+              type === "file"
+                ? (e) => {
+                    onChange(e.target.files)
+                    if (typeof handleChange !== "undefined") {
+                      handleChange()
+                    }
+                  }
+                : onChange
+            }
+            value={type === "file" ? value.filename : value}
             ref={ref}
             size={size}
           />

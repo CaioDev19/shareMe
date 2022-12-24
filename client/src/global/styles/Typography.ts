@@ -10,9 +10,16 @@ interface Props {
   size?: FontSize
   position?: textPosition
   color?: Colors
+  pointer?: boolean
 }
 
 export const Text = styled.p<Props>`
+  cursor: ${({ pointer }) => pointer && "pointer"};
+  text-align: ${({ position }) => (position ? position : "center")};
+  color: ${({ theme, color }) => {
+    return color ? theme.COLORS[color] : theme.COLORS.black
+  }};
+
   ${(props) => {
     switch (props.type) {
       case "title":
@@ -26,12 +33,6 @@ export const Text = styled.p<Props>`
               ? theme.FONT_SIZE[props.size]
               : theme.FONT_SIZE.lrg};
           line-height: 1.5rem;
-          color: ${({ theme }) =>
-            props.color
-              ? theme.COLORS[props.color]
-              : theme.COLORS.black};
-          text-align: ${() =>
-            props.position ? props.position : "center"};
         `
       case "paragraph":
         return css`
@@ -44,12 +45,6 @@ export const Text = styled.p<Props>`
               ? theme.FONT_SIZE[props.size]
               : theme.FONT_SIZE.rgl};
           line-height: 1.3rem;
-          color: ${({ theme }) =>
-            props.color
-              ? theme.COLORS[props.color]
-              : theme.COLORS.black};
-          text-align: ${() =>
-            props.position ? props.position : "center"};
         `
       case "span":
         return css`
@@ -62,12 +57,6 @@ export const Text = styled.p<Props>`
               ? theme.FONT_SIZE[props.size]
               : theme.FONT_SIZE.sml};
           line-height: 1.2rem;
-          color: ${({ theme }) =>
-            props.color
-              ? theme.COLORS[props.color]
-              : theme.COLORS.black};
-          text-align: ${() =>
-            props.position ? props.position : "center"};
         `
     }
   }}
