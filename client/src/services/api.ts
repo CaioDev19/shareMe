@@ -16,6 +16,16 @@ export interface UserApi {
   token: string
 }
 
+export interface Post {
+  title: string
+  image_name: string
+  image: string
+  description: string
+  user_id: string
+  category_id: number
+  category_name: string
+}
+
 export const api = axios.create({
   baseURL: "http://localhost:8000",
   timeout: 1000,
@@ -24,16 +34,22 @@ export const api = axios.create({
   },
 })
 
-export async function logIn(
-  body: object
-): Promise<AxiosResponse<UserApi>> {
-  const response = await api.post("/login", body)
-  return response
+export function logIn(body: object): Promise<AxiosResponse<UserApi>> {
+  return api.post("/login", body)
 }
 
-export async function listCategories(
+export function listCategories(
   body: object
 ): Promise<AxiosResponse<Category[]>> {
-  const response = await api.get("/category", body)
-  return response
+  return api.get("/category", body)
+}
+
+export function createPost(
+  body: object
+): Promise<AxiosResponse<Post>> {
+  return api.post("/post", body, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
 }

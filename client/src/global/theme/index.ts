@@ -5,6 +5,7 @@ export const theme = {
 
     peach: "#FA9494",
 
+    gray: "	#E8E8E8",
     gray_100: "#CFD2CF",
     gray_200: "#6b7280",
 

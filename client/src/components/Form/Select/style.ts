@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Text } from "../../../global/styles/Typography"
 
 export const Select = styled.select`
   all: unset;
@@ -9,7 +10,8 @@ export const Select = styled.select`
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.gray_100};
   border-radius: 5px;
 
-  padding: 1.3rem 0.5rem;
+  padding: 0.75rem 0;
+  width: 100%;
 
   /* Arrow */
   appearance: none;
@@ -27,4 +29,11 @@ export const Select = styled.select`
   &:focus {
     box-shadow: 0px 0px 18px -3px ${({ theme }) => theme.COLORS.whitesh};
   }
+`
+
+export const Label = styled(Text)`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
 `

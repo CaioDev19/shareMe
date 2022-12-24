@@ -4,7 +4,11 @@ import { useSignOutOnError } from "./useSignOutOnError"
 import { useEffect } from "react"
 
 export function useCategories() {
-  const query = useQuery(["category"], listCategories)
+  const query = useQuery(["category"], listCategories, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  })
   const [shouldSignOut, setShouldSignOut] = useSignOutOnError()
 
   useEffect(() => {

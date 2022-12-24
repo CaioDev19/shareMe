@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components"
-import { FontSize, Colors } from "../theme"
+import { FontSize, Colors, FontWeight } from "../theme"
 
 interface Props {
   size: FontSize
   background?: Colors
   color?: Colors
+  weight?: FontWeight
 }
 
 export const Button = styled.button<Props>`
@@ -12,6 +13,8 @@ export const Button = styled.button<Props>`
   box-sizing: border-box;
   cursor: pointer;
   box-shadow: 0px 7px 5px -6px rgba(0, 0, 0, 0.5);
+  font-weight: ${({ theme, weight }) =>
+    weight ? theme.FONT_WEIGHT[weight] : theme.FONT_WEIGHT.str};
 
   ${(props) => {
     switch (props.size) {

@@ -12,7 +12,7 @@ export function Login() {
   const navigate = useNavigate()
   const { user, setUser } = useUser()
 
-  function handleLogInSucess(response: AxiosResponse<UserApi>): void {
+  function onSucess(response: AxiosResponse<UserApi>): void {
     setUser({
       userData: response.data.user,
       token: response.data.token,
@@ -20,11 +20,11 @@ export function Login() {
     navigate("/home")
   }
 
-  function handleLogInError(error: any): void {
-    console.log("error")
+  function onError(error: any): void {
+    console.log(error.message)
   }
 
-  const { mutate } = useLogIn(handleLogInSucess, handleLogInError)
+  const { mutate } = useLogIn(onSucess, onError)
 
   function handleLogin(googleResponse: any): void {
     interface Iuser {
