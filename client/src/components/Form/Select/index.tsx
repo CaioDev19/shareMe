@@ -16,7 +16,6 @@ export function Select({ options, name, label, control }: Props) {
       <Controller
         name={name}
         control={control}
-        defaultValue=""
         render={({ field: { onChange, ref, name, value } }) => {
           return (
             <Sc.Label type="title" as="label" size="lrg" weight="str">
@@ -49,7 +48,6 @@ export function Select({ options, name, label, control }: Props) {
     <Controller
       name={name}
       control={control}
-      defaultValue=""
       render={({ field: { onChange, ref, name, value } }) => {
         return (
           <Sc.Select
