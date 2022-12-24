@@ -49,6 +49,7 @@ export function createPost(
 ): Promise<AxiosResponse<Post>> {
   return api.post("/post", body, {
     headers: {
+      Accept: "application/json",
       "Content-Type": "multipart/form-data",
     },
   })

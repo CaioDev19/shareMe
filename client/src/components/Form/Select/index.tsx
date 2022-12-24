@@ -58,6 +58,7 @@ export function Select({ options, name, label, control }: Props) {
             onChange={onChange}
             value={value}
             ref={ref}
+            defaultValue=""
           >
             <option value="" disabled>
               Select Category

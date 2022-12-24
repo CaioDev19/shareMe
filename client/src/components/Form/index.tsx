@@ -4,21 +4,11 @@ interface Props {
   children: ReactNode
   onSubmit: FormEventHandler<HTMLFormElement>
   className?: string
-  encyType?: string
 }
 
-export function Form({
-  onSubmit,
-  children,
-  className,
-  encyType,
-}: Props) {
+export function Form({ onSubmit, children, className }: Props) {
   return (
-    <form
-      onSubmit={onSubmit}
-      className={className}
-      encType={encyType}
-    >
+    <form onSubmit={onSubmit} className={className}>
       {children}
     </form>
   )

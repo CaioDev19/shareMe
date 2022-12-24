@@ -8,10 +8,7 @@ import { Navigate } from "react-router-dom"
 import { IoCloudUploadOutline } from "react-icons/io5"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  NewPost,
-  postSchema,
-} from "../../utils/validators/postSchema"
+import { postSchema } from "../../utils/validators/postSchema"
 import { useMutation } from "@tanstack/react-query"
 import * as api from "../../services/api"
 
@@ -59,10 +56,7 @@ export function CreatePost() {
   }
 
   return (
-    <Sc.Form
-      onSubmit={handleSubmit(handleData, handleError)}
-      encyType="multipart/form-data"
-    >
+    <Sc.Form onSubmit={handleSubmit(handleData, handleError)}>
       <Sc.LeftContent>
         <Sc.InnerWrapper>
           <Sc.IconContainer>
