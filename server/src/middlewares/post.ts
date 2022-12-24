@@ -9,7 +9,7 @@ export async function checkIfCategorieExists(
   res: Response,
   next: NextFunction
 ) {
-  const { category_id } = req.body
+  const { category_id } = req.body.data
 
   const { response, data } = await isInTheDataBase<Category>(
     { id: category_id },

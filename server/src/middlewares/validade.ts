@@ -27,6 +27,10 @@ export function validade(schema: AnyZodObject) {
     res: Response,
     next: NextFunction
   ) {
+    if (typeof req.body.data !== "undefined") {
+      req.body.data = JSON.parse(req.body.data)
+    }
+
     try {
       await schema.parseAsync({
         body: req.body,

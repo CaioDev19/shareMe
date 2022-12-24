@@ -1,6 +1,6 @@
-import { ValidationPost } from "../validators/postSchema"
 import { userSchema } from "../validators/userSchema"
 import { z } from "zod"
+import { postSchmea } from "../validators/postSchema"
 
 export interface Category {
   id: number
@@ -8,7 +8,9 @@ export interface Category {
   image: string
 }
 
-export interface Post extends ValidationPost {
+type PostData = z.infer<typeof postSchmea>["body"]["data"]
+
+export interface Post extends PostData {
   image_name: string
   image: Buffer | string
   user_id: string

@@ -10,7 +10,7 @@ export async function makePost(
   req: CustomBodyRequest<ValidationPost>,
   res: Response
 ) {
-  const { title, description, category_id } = req.body
+  const { title, description, category_id } = req.body.data
 
   try {
     const imageBuffer = await compressFile(req.file!.path)
@@ -23,9 +23,10 @@ export async function makePost(
         description: description && description,
         user_id: req.loggedUser.id,
         category_id,
-        category_name: req.categoryName,
       })
       .returning("*")
+
+    deleteFile(req.file!.path)
 
     if (!newPost) {
       return res
@@ -39,9 +40,10 @@ export async function makePost(
       ...newPost[0],
       category_name: req.category_name,
     })
-    deleteFile(req.file!.path)
+
     return
-  } catch {
+  } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: "Server internal error." })
   }
 }
