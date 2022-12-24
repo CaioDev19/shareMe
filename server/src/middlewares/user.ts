@@ -1,22 +1,37 @@
 import { Response, NextFunction } from "express"
-import { CustomBodyRequest } from "../interfaces/express"
+import { CustomBodyParamsRequest } from "../interfaces/express"
 import { isInTheDataBase } from "../utils/db"
 import { User } from "../interfaces/db"
 import knex from "../config/dataBase"
 
 export async function doesTheUserExist(
-  req: CustomBodyRequest<User>,
+  req: CustomBodyParamsRequest<User, { id?: string }>,
   res: Response,
   next: NextFunction
 ) {
   const { id, email, name, image } = req.body
-
-  const { response, data } = await isInTheDataBase<User>(
-    { id },
-    "user"
-  )
+  const { id: urId } = req.params
 
   try {
+    if (urId) {
+      const { response, data } = await isInTheDataBase<User>(
+        { id: urId },
+        "user"
+      )
+
+      if (response) {
+        req.userData = data
+        return next()
+      }
+
+      return res.status(404).json({ message: "User not found." })
+    }
+
+    const { response, data } = await isInTheDataBase<User>(
+      { id },
+      "user"
+    )
+
     if (response) {
       req.userData = data
       return next()

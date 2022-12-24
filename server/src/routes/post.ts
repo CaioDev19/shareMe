@@ -1,8 +1,13 @@
 import express from "express"
 import multer from "multer"
 import { storage } from "../config/multerConfig"
-import { listPosts, makePost } from "../controllers/post"
+import {
+  listPosts,
+  listUserPosts,
+  makePost,
+} from "../controllers/post"
 import { checkIfCategoryExists } from "../middlewares/post"
+import { doesTheUserExist } from "../middlewares/user"
 import { validade } from "../middlewares/validade"
 import { postSchmea } from "../validators/postSchema"
 
@@ -18,5 +23,7 @@ router
     makePost
   )
   .get(listPosts)
+
+router.get("/:id", doesTheUserExist, listUserPosts)
 
 export default router
