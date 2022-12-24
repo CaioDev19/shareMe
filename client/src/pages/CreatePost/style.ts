@@ -105,4 +105,9 @@ export const Button = styled(StyledButton)`
   border-radius: 30px;
   padding-left: 1.65em;
   padding-right: 1.65em;
+  min-width: 121.5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

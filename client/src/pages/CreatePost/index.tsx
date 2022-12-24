@@ -14,6 +14,7 @@ import { NewPost } from "../../utils/validators/postSchema"
 import { useState } from "react"
 import { FaTrash } from "react-icons/fa"
 import { useCreatePost } from "../../hooks/query/useCreatePost"
+import Spinner from "react-bootstrap/Spinner"
 
 export function CreatePost() {
   const { user } = useUser()
@@ -32,7 +33,7 @@ export function CreatePost() {
       image: [],
     } as NewPost,
   })
-  const { mutate } = useCreatePost()
+  const { mutate, isLoading } = useCreatePost()
 
   function handleData(data: NewPost) {
     const { id: categoryId } = categories?.data.find((category) => {
@@ -164,7 +165,16 @@ export function CreatePost() {
           color="white"
           type="submit"
         >
-          Save post
+          {isLoading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              variant="light"
+              size="sm"
+            />
+          ) : (
+            "Save Post"
+          )}
         </Sc.Button>
       </Sc.RightContent>
     </Sc.Form>
