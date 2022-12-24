@@ -1,4 +1,4 @@
-import { Response } from "express"
+import { Response, Request } from "express"
 import knex from "../config/dataBase"
 import { CustomBodyRequest } from "../interfaces/express"
 import { ValidationPost } from "../validators/postSchema"
@@ -26,7 +26,7 @@ export async function makePost(
       })
       .returning("*")
 
-    deleteFile(req.file!.path)
+    await deleteFile(req.file!.path)
 
     if (!newPost) {
       return res
@@ -42,6 +42,26 @@ export async function makePost(
     })
 
     return
+  } catch {
+    return res.status(500).json({ message: "Server internal error." })
+  }
+}
+
+export async function listPosts(_req: Request, res: Response) {
+  try {
+    const posts = await knex<Post>("post")
+
+    if (typeof posts === "undefined") {
+      return res
+        .status(500)
+        .json({ message: "Server internal error." })
+    }
+
+    posts.forEach((post) => {
+      post.image = convertToBase64(<Buffer>post.image)
+    })
+
+    res.status(200).json(posts)
   } catch (error) {
     console.log(error)
     return res.status(500).json({ message: "Server internal error." })

@@ -4,7 +4,7 @@ import { isInTheDataBase } from "../utils/db"
 import { ValidationPost } from "../validators/postSchema"
 import { Category } from "../interfaces/db"
 
-export async function checkIfCategorieExists(
+export async function checkIfCategoryExists(
   req: CustomBodyRequest<ValidationPost>,
   res: Response,
   next: NextFunction

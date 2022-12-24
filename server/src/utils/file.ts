@@ -1,14 +1,8 @@
-import fs from "fs"
+import fs from "fs/promises"
 import sharp from "sharp"
 
-export function deleteFile(filePath: string): void {
-  fs.unlink(filePath, (error) => {
-    if (error !== null) {
-      deleteFile(filePath)
-      return
-    }
-  })
-  return
+export async function deleteFile(filePath: string) {
+  return await fs.unlink(filePath)
 }
 
 export async function compressFile(

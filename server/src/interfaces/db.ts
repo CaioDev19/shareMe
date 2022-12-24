@@ -14,7 +14,6 @@ export interface Post extends PostData {
   image_name: string
   image: Buffer | string
   user_id: string
-  category_name: string
 }
 
 export type User = z.infer<typeof userSchema>["body"]
