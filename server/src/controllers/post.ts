@@ -4,10 +4,11 @@ import {
   CustomBodyRequest,
   CustomParamsQueryRequest,
   CustomQueryRequest,
+  pagination,
 } from "../interfaces/express"
 import { ValidationPost } from "../validators/postSchema"
 import { convertToBase64Url } from "../utils/convert"
-import { deleteFile, compressFile } from "../utils/file"
+import { compressFile } from "../utils/file"
 import { Post, User } from "../interfaces/db"
 
 export async function makePost(
@@ -31,8 +32,6 @@ export async function makePost(
       })
       .returning("*")
 
-    await deleteFile(req.file!.path)
-
     if (!newPost) {
       return res
         .status(500)
@@ -51,74 +50,15 @@ export async function makePost(
 }
 
 export async function listPosts(
-  req: CustomQueryRequest<{
-    page: string
-    limit: string
-  }>,
+  req: CustomQueryRequest<pagination>,
   res: Response
 ) {
-  const page = Number(req.query.page) || 1
-  const limit = Number(req.query.limit) || 20
-
-  try {
-    const posts = await knex<Post>("post")
-      .join("category", "category.id", "post.category_id")
-      .select("post.*", "category.name as category_name")
-      .limit(limit)
-      .offset((page - 1) * limit)
-      .debug(true)
-
-    if (typeof posts === "undefined") {
-      return res
-        .status(500)
-        .json({ message: "Server internal error." })
-    }
-
-    posts.forEach((post) => {
-      post.image = convertToBase64Url(<Buffer>post.image)
-    })
-
-    res.status(200).json(posts)
-  } catch {
-    return res.status(500).json({ message: "Server internal error." })
-  }
+  res.status(200).json(req!.paginatedPosts)
 }
 
 export async function listUserPosts(
-  req: CustomParamsQueryRequest<
-    { id: string },
-    {
-      page: string
-      limit: string
-    }
-  >,
+  req: CustomParamsQueryRequest<{ id?: string }, pagination>,
   res: Response
 ) {
-  const page = Number(req.query.page) || 1
-  const limit = Number(req.query.limit) || 20
-  const { id } = req.params
-
-  try {
-    const posts = await knex<Post>("post")
-      .join("category", "category.id", "post.category_id")
-      .select("post.*", "category.name as category_name")
-      .where({ user_id: id })
-      .limit(limit)
-      .offset((page - 1) * limit)
-      .debug(true)
-
-    if (typeof posts === "undefined") {
-      return res
-        .status(500)
-        .json({ message: "Server internal error." })
-    }
-
-    posts.forEach((post) => {
-      post.image = convertToBase64Url(<Buffer>post.image)
-    })
-
-    res.status(200).json(posts)
-  } catch {
-    return res.status(500).json({ message: "Server internal error." })
-  }
+  res.status(200).json(req!.paginatedPosts)
 }

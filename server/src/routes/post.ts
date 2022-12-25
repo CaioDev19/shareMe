@@ -6,7 +6,11 @@ import {
   listUserPosts,
   makePost,
 } from "../controllers/post"
-import { checkIfCategoryExists } from "../middlewares/post"
+import {
+  checkIfCategoryExists,
+  checkIfThePageExists,
+  paginatedResults,
+} from "../middlewares/post"
 import { doesTheUserExist } from "../middlewares/user"
 import { validade } from "../middlewares/validade"
 import { postSchmea } from "../validators/postSchema"
@@ -22,8 +26,14 @@ router
     checkIfCategoryExists,
     makePost
   )
-  .get(listPosts)
+  .get(checkIfThePageExists, paginatedResults, listPosts)
 
-router.get("/:id", doesTheUserExist, listUserPosts)
+router.get(
+  "/:id",
+  doesTheUserExist,
+  checkIfThePageExists,
+  paginatedResults,
+  listUserPosts
+)
 
 export default router

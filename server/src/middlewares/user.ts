@@ -13,20 +13,23 @@ export async function doesTheUserExist(
   const { id: urId } = req.params
 
   try {
-    if (urId) {
+    //Validation user id sent by the url
+    if (typeof urId !== "undefined") {
       const { response, data } = await isInTheDataBase<User>(
         { id: urId },
         "user"
       )
 
-      if (response) {
-        req.userData = data
-        return next()
+      if (!response) {
+        return res.status(404).json({ message: "User not found." })
       }
 
-      return res.status(404).json({ message: "User not found." })
+      req.userData = data
+      return next()
     }
+    //Validation user id sent by the body
 
+    //Validate if the user is already in the database
     const { response, data } = await isInTheDataBase<User>(
       { id },
       "user"
@@ -37,6 +40,7 @@ export async function doesTheUserExist(
       return next()
     }
 
+    //Create new user if it doesn't exist
     const { response: doesEmailExist } = await isInTheDataBase<User>(
       { email },
       "user"

@@ -1,11 +1,17 @@
 import { Request } from "express"
 import { Query, ParamsDictionary } from "express-serve-static-core"
-import { User } from "./db"
+import { Post, User } from "./db"
 
 export interface CustomRequest extends Request {
   loggedUser?: User
   category_name?: string
   userData?: User
+  totalPages?: number
+  paginatedPosts?: {
+    totalPages: number
+    currentPage: number
+    results: Post[]
+  }
   [index: string]: any
 }
 
@@ -31,12 +37,16 @@ export interface CustomBodyParamsRequest<
   params: U
 }
 
-export interface CustomBodyQueryRequest<T, U extends Query> {
+export interface CustomBodyQueryRequest<T, U extends Query>
+  extends CustomRequest {
   body: T
   query: U
 }
 
-export interface CustomParamsQueryRequest<T, U extends Query> {
+export interface CustomParamsQueryRequest<
+  T extends ParamsDictionary,
+  U extends Query
+> extends CustomRequest {
   params: T
   query: U
 }
@@ -45,8 +55,13 @@ export interface CustomBodyParamsQueryRequest<
   T,
   U extends Query,
   V extends ParamsDictionary
-> {
+> extends CustomRequest {
   body: T
   query: U
   params: V
+}
+
+export type pagination = {
+  page?: string
+  limit?: string
 }
