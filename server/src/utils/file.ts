@@ -2,17 +2,25 @@ import fs from "fs/promises"
 import sharp from "sharp"
 import path from "path"
 
-export async function deleteUploadedImages() {
-  const files = await fs.readdir(path.resolve("./src/uploads"))
+export async function deleteUploadedImages(
+  maxIterations: number = Infinity,
+  iteration: number = 0
+) {
+  try {
+    if (iteration >= maxIterations) return
 
-  if (files.length === 0) return
+    const files = await fs.readdir(path.resolve("./src/uploads"))
 
-  for (const file of files) {
-    await fs.unlink(path.resolve(`./src/uploads/${file}`))
+    for (const file of files) {
+      if (files.length === 0) break
+      await fs.unlink(path.resolve(`./src/uploads/${file}`))
+    }
+  } catch {
+    return
   }
 
-  setInterval(() => {
-    deleteUploadedImages()
+  setTimeout(() => {
+    deleteUploadedImages(maxIterations, iteration + 1)
   }, 3600000)
 }
 
