@@ -101,7 +101,6 @@ export const WrapperUserInfo = styled.div`
 `
 
 export const Button = styled(StyledButton)`
-  align-self: flex-end;
   border-radius: 30px;
   padding-left: 1.65em;
   padding-right: 1.65em;
@@ -109,5 +108,11 @@ export const Button = styled(StyledButton)`
 
   display: flex;
   justify-content: center;
+  align-items: center;
+`
+
+export const WrapperErrorButton = styled.div`
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 `

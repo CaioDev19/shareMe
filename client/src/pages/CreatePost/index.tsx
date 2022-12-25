@@ -19,12 +19,21 @@ import Spinner from "react-bootstrap/Spinner"
 export function CreatePost() {
   const { user } = useUser()
   const [imageBackground, setimageBackground] = useState<string>("")
+  const [isImageBeingUploaded, setIsImageBeingUploaded] =
+    useState<boolean>(false)
+  const [isFileError, setIsFileError] = useState<boolean>(false)
   const {
     data: categories,
     isSuccess,
     shouldSignOut,
   } = useCategories()
-  const { handleSubmit, control, watch, resetField } = useForm({
+  const {
+    handleSubmit,
+    control,
+    watch,
+    resetField,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(postSchema),
     defaultValues: {
       title: "",
@@ -56,21 +65,42 @@ export function CreatePost() {
   }
 
   function handleError(error: any) {
-    console.log(error)
+    if (error?.title && error.title.type === "too_small") {
+      resetField("title", {
+        keepError: true,
+      })
+    }
   }
 
   function addImageBackground(): void {
-    const image = watch("image")
+    const validImageTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/svg+xml",
+      "image/gif",
+      "iamge/svg",
+      "image/tiff",
+    ]
 
+    const image = watch("image")
     if (image.length === 0) {
       return
     }
+
+    if (!validImageTypes.includes(image[0].type)) {
+      setIsFileError(true)
+      return
+    }
+
+    setIsFileError(false)
+    setIsImageBeingUploaded(true)
 
     const reader = new FileReader()
 
     reader.readAsDataURL(image[0])
     reader.onload = function () {
       const fileContent = reader.result
+      setIsImageBeingUploaded(false)
       setimageBackground(`${fileContent}`)
     }
   }
@@ -90,6 +120,14 @@ export function CreatePost() {
     <Sc.Form onSubmit={handleSubmit(handleData, handleError)}>
       <Sc.LeftContent>
         <Sc.InnerWrapper noPadding={!!imageBackground}>
+          {isImageBeingUploaded && (
+            <Spinner as="div" animation="border" variant="danger" />
+          )}
+          {isFileError && (
+            <Text type="span" as="span" size="rgl" color="red">
+              File type not supported
+            </Text>
+          )}
           {!imageBackground ? (
             <>
               <Sc.IconContainer>
@@ -130,7 +168,11 @@ export function CreatePost() {
           name="title"
           type="text"
           control={control}
-          placeholder="Add your tittle"
+          placeholder={
+            errors.title?.type === "too_small"
+              ? errors.title.message
+              : "Add a title"
+          }
           size="exl"
         />
         <Sc.WrapperUserInfo>
@@ -159,23 +201,36 @@ export function CreatePost() {
             label="Choose Pin Category"
           />
         )}
-        <Sc.Button
-          size="sml"
-          background="redStr"
-          color="white"
-          type="submit"
-        >
-          {isLoading ? (
-            <Spinner
+        <Sc.WrapperErrorButton>
+          <Sc.Button
+            size="sml"
+            background="redStr"
+            color="white"
+            type="submit"
+          >
+            {isLoading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                variant="light"
+                size="sm"
+              />
+            ) : (
+              "Save Post"
+            )}
+          </Sc.Button>
+          {(errors?.image || errors?.category || errors?.title) && (
+            <Text
+              type="span"
               as="span"
-              animation="border"
-              variant="light"
-              size="sm"
-            />
-          ) : (
-            "Save Post"
+              size="rgl"
+              color="red"
+              weight="str"
+            >
+              Please fill all the fields
+            </Text>
           )}
-        </Sc.Button>
+        </Sc.WrapperErrorButton>
       </Sc.RightContent>
     </Sc.Form>
   )

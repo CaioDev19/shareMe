@@ -1,9 +1,12 @@
 import { z } from "zod"
 
 export const postSchema = z.object({
-  title: z.string().min(4, "Please enter a valid value").max(100),
+  title: z
+    .string()
+    .min(4, "Title must have atleast four characters")
+    .max(100),
   description: z.string().max(200).optional(),
-  category: z.string(),
+  category: z.string().min(1),
   image: z.record(z.any()),
 })
 
