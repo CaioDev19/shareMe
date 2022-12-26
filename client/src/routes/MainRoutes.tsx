@@ -6,6 +6,7 @@ import { PrivateRoutes } from "../utils/PrivateRoutes"
 import { CreatePost } from "../pages/CreatePost"
 import { MainNavigation } from "../components/MainNavigation"
 import { JustSideBar } from "../components/MainNavigation/JustSideBar"
+import { UserProfile } from "../pages/UserProfile"
 
 export function MainRoutes() {
   return (
@@ -19,7 +20,7 @@ export function MainRoutes() {
           <Route path="/create_post" element={<CreatePost />} />
         </Route>
         <Route element={<JustSideBar />}>
-          <Route path="user-profile/:id" element={<h1>teste</h1>} />
+          <Route path="user_profile/:id" element={<UserProfile />} />
         </Route>
       </Route>
     </Routes>

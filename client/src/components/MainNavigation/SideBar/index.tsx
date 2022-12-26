@@ -60,7 +60,10 @@ export function SideBar() {
             })}
         </Sc.ContainerCategories>
       </Sc.ContentContainer>
-      <Sc.Button size="sml">
+      <Sc.Button
+        size="sml"
+        onClick={() => navigate(`user_profile/${user.userData.id}`)}
+      >
         <img src={user.userData.image} alt="profile" />
         <Text type="span" as="span" size="rgl" color="black">
           {user.userData.name}

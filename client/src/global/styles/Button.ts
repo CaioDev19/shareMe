@@ -6,6 +6,7 @@ interface Props {
   background?: Colors
   color?: Colors
   weight?: FontWeight
+  radios?: "round" | "square"
 }
 
 export const Button = styled.button<Props>`
@@ -15,46 +16,56 @@ export const Button = styled.button<Props>`
   box-shadow: 0px 7px 5px -6px rgba(0, 0, 0, 0.5);
   font-weight: ${({ theme, weight }) =>
     weight ? theme.FONT_WEIGHT[weight] : theme.FONT_WEIGHT.str};
+  background-color: ${({ theme, background }) =>
+    background ? theme.COLORS[background] : theme.COLORS.white};
+  color: ${({ theme, color }) =>
+    color ? theme.COLORS[color] : theme.COLORS.black};
+  border-radius: ${({ radios }) => {
+    switch (radios) {
+      case "round":
+        return "20px"
+      case "square":
+        return "5px"
+      default:
+        return "10px"
+    }
+  }};
+  text-align: center;
 
   ${(props) => {
     switch (props.size) {
       case "lrg":
         return css`
-          background-color: ${({ theme }) =>
-            props.background
-              ? theme.COLORS[props.background]
-              : theme.COLORS.white};
-          border-radius: 5px;
           padding: ${({ theme }) => {
             return `${theme.SPACERS.rgl} ${theme.SPACERS.lrg}`
           }};
           font-size: ${({ theme }) => {
             return theme.SPACERS.lrg
           }};
-          color: ${({ theme }) =>
-            props.color
-              ? theme.COLORS[props.color]
-              : theme.COLORS.black};
           line-height: 1.1em;
+          min-width: 4rem;
+        `
+      case "rgl":
+        return css`
+          padding: ${({ theme }) => {
+            return `${theme.SPACERS.rgl} ${theme.SPACERS.rgl}`
+          }};
+          font-size: ${({ theme }) => {
+            return theme.SPACERS.lrg
+          }};
+          line-height: 1.1em;
+          min-width: 3rem;
         `
       case "sml":
         return css`
-          background-color: ${({ theme }) =>
-            props.background
-              ? theme.COLORS[props.background]
-              : theme.COLORS.white};
-          border-radius: 5px;
           padding: ${({ theme }) => {
             return `${theme.SPACERS.sml} ${theme.SPACERS.rgl}`
           }};
           font-size: ${({ theme }) => {
             return theme.SPACERS.rgl
           }};
-          color: ${({ theme }) =>
-            props.color
-              ? theme.COLORS[props.color]
-              : theme.COLORS.black};
           line-height: 1.1em;
+          min-width: 5.5rem;
         `
     }
   }};

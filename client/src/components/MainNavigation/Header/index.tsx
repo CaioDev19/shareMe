@@ -13,7 +13,13 @@ export function Header() {
       <Sc.SearchIcon as={BiSearchAlt2} />
       <Sc.Input type="text" placeholder="Search" />
       <Sc.WrapperIcons>
-        <Sc.ProfileIcon src={user.userData.image} alt="profile" />
+        <Sc.ProfileIcon
+          src={user.userData.image}
+          alt="profile"
+          onClick={() =>
+            navigate(`/user_profile/${user.userData.id}`)
+          }
+        />
         <Sc.AddIconWrapper
           as="div"
           onClick={() => navigate("/create_post")}

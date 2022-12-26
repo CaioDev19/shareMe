@@ -14,6 +14,11 @@ export const StyledSideBar = styled.div`
   flex-direction: column;
   justify-content: space-between;
   flex-shrink: 0;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
 `
 
 export const ContentContainer = styled.div`

@@ -23,11 +23,13 @@ export const ProfileIcon = styled.img`
   border-radius: 0.5rem;
   width: 3.5rem;
   height: 3rem;
+  cursor: pointer;
 `
 
 export const AddIconWrapper = styled(ProfileIcon)`
   background-color: black;
   position: relative;
+  cursor: pointer;
 `
 
 export const AddIcon = styled.svg`

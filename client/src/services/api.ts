@@ -28,7 +28,7 @@ export interface Post {
 
 export const api = axios.create({
   baseURL: "http://localhost:8000",
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -53,4 +53,14 @@ export function createPost(
       "Content-Type": "multipart/form-data",
     },
   })
+}
+
+export function listUserPosts({
+  pageParam = 1,
+  queryKey,
+}: {
+  pageParam?: number
+  queryKey: string[]
+}): Promise<AxiosResponse<any>> {
+  return api.get(`/post/${queryKey[1]}/?page=${pageParam}`)
 }
