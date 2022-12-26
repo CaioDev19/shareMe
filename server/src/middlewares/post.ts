@@ -4,7 +4,7 @@ import {
   CustomParamsQueryRequest,
   pagination,
 } from "../interfaces/express"
-import { isInTheDataBase } from "../utils/db"
+import { getPostsFromDatabase, isInTheDataBase } from "../utils/db"
 import { ValidationPost } from "../validators/postSchema"
 import { Category, Post } from "../interfaces/db"
 import knex from "../config/dataBase"
@@ -95,20 +95,7 @@ export async function paginatedResults(
 
   if (typeof id !== "undefined") {
     try {
-      posts = await knex<Post>("post")
-        .innerJoin("category", "category.id", "post.category_id")
-        .innerJoin("user", "user.id", "post.user_id")
-        .select(
-          "post.*",
-          "category.name as category_name",
-          "user.name as user_name",
-          "user.image as user_image"
-        )
-        .where({ user_id: id })
-        .limit(limit)
-        .offset(offset)
-        .orderBy("post.id", "desc")
-        .debug(true)
+      posts = await getPostsFromDatabase({ id, limit, offset })
     } catch {
       return res
         .status(500)
@@ -116,20 +103,7 @@ export async function paginatedResults(
     }
   } else {
     try {
-      posts = await knex<Post>("post")
-        .join("category", "category.id", "post.category_id")
-        .select("post.*", "category.name as category_name")
-        .innerJoin("user", "user.id", "post.user_id")
-        .select(
-          "post.*",
-          "category.name as category_name",
-          "user.name as user_name",
-          "user.image as user_image"
-        )
-        .limit(limit)
-        .offset(offset)
-        .orderBy("post.id", "desc")
-        .debug(true)
+      posts = await getPostsFromDatabase({ limit, offset })
     } catch {
       return res
         .status(500)
