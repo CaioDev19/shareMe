@@ -9,4 +9,8 @@ export const RightContentWrapper = styled.div`
   height: 100vh;
 
   padding: 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `

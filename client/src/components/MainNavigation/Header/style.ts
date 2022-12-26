@@ -6,6 +6,7 @@ export const Container = styled.header`
   gap: 0.85rem;
 
   margin-bottom: 2.5rem;
+  width: 100%;
 `
 
 export const WrapperIcons = styled.div`

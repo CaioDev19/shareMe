@@ -1,7 +1,6 @@
 import * as Sc from "./style"
 import { Input } from "../../components/Form/Input"
 import { Text } from "../../global/styles/Typography"
-import { useUser } from "../../hooks/useUser"
 import { Select } from "../../components/Form/Select"
 import { useCategories } from "../../hooks/query/useCategories"
 import { Navigate } from "react-router-dom"
@@ -15,9 +14,9 @@ import { useState } from "react"
 import { FaTrash } from "react-icons/fa"
 import { useCreatePost } from "../../hooks/query/useCreatePost"
 import Spinner from "react-bootstrap/Spinner"
+import { UserInfo } from "../../components/UserInfo"
 
 export function CreatePost() {
-  const { user } = useUser()
   const [imageBackground, setimageBackground] = useState<string>("")
   const [isImageBeingUploaded, setIsImageBeingUploaded] =
     useState<boolean>(false)
@@ -175,18 +174,7 @@ export function CreatePost() {
           }
           size="exl"
         />
-        <Sc.WrapperUserInfo>
-          <img src={user.userData.image} alt="profile" />
-          <Text
-            type="span"
-            as="span"
-            size="rgl"
-            color="black"
-            weight="sstr"
-          >
-            {user.userData.name}
-          </Text>
-        </Sc.WrapperUserInfo>
+        <UserInfo />
         <Input
           name="description"
           type="text"

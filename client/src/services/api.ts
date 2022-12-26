@@ -26,6 +26,12 @@ export interface Post {
   category_name: string
 }
 
+export interface Posts {
+  totalPages: number
+  currentPage: number
+  results: Post[]
+}
+
 export const api = axios.create({
   baseURL: "http://localhost:8000",
   timeout: 5000,
@@ -61,6 +67,14 @@ export function listUserPosts({
 }: {
   pageParam?: number
   queryKey: string[]
-}): Promise<AxiosResponse<any>> {
+}): Promise<AxiosResponse<Posts>> {
   return api.get(`/post/${queryKey[1]}/?page=${pageParam}`)
+}
+
+export function listAllPosts({
+  pageParam = 1,
+}: {
+  pageParam?: number
+}): Promise<AxiosResponse<Posts>> {
+  return api.get(`/post/?page=${pageParam}`)
 }

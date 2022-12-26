@@ -88,18 +88,6 @@ export const RightContent = styled.div`
   gap: 40px;
 `
 
-export const WrapperUserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-`
-
 export const Button = styled(StyledButton)`
   border-radius: 30px;
   padding-left: 1.65em;

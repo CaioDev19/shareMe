@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
 `
 export const Banner = styled.div`
@@ -14,7 +15,20 @@ export const Banner = styled.div`
 
   position: relative;
 `
-export const ContentContainer = styled.div``
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+
+  width: 100%;
+  max-width: 2100px;
+
+  padding: 0 0.55rem;
+
+  margin-bottom: 0.75rem;
+`
 
 export const UserInfoContainer = styled.div`
   display: flex;

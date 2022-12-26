@@ -1,3 +1,5 @@
+import { Feed } from "../../components/Feed"
+
 export function Home() {
-  return <div>home</div>
+  return <Feed />
 }

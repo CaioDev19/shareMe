@@ -1,13 +1,16 @@
 import { useMutation } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
 import { createPost } from "../../services/api"
+import { useQueryClient } from "@tanstack/react-query"
 
 export function useCreatePost() {
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   return useMutation(createPost, {
     onSuccess: () => {
       navigate("/home")
+      queryClient.invalidateQueries(["posts"])
     },
   })
 }
