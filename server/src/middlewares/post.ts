@@ -72,7 +72,7 @@ export async function checkIfThePageExists(
     return next()
   }
 
-  if (page > totalPages || page < 1) {
+  if ((totalPages > 0 && page > totalPages) || page < 1) {
     return res.status(404).json({ message: "Page not found." })
   }
 
@@ -101,6 +101,7 @@ export async function paginatedResults(
         .where({ user_id: id })
         .limit(limit)
         .offset(offset)
+        .orderBy("post.id", "desc")
         .debug(true)
     } catch {
       return res
@@ -114,6 +115,7 @@ export async function paginatedResults(
         .select("post.*", "category.name as category_name")
         .limit(limit)
         .offset(offset)
+        .orderBy("post.id", "desc")
         .debug(true)
     } catch {
       return res
@@ -132,7 +134,7 @@ export async function paginatedResults(
 
   req.paginatedPosts = {
     totalPages,
-    currentPage: page,
+    currentPage: totalPages === 0 ? 0 : page,
     results: posts,
   }
   next()
