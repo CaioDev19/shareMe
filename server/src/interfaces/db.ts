@@ -14,6 +14,8 @@ export interface Post extends PostData {
   image_name: string
   image: Buffer | string
   user_id: string
+  user_name: string
+  user_image: string
   category_name?: string
 }
 

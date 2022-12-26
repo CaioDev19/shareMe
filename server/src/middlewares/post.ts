@@ -96,8 +96,14 @@ export async function paginatedResults(
   if (typeof id !== "undefined") {
     try {
       posts = await knex<Post>("post")
-        .join("category", "category.id", "post.category_id")
-        .select("post.*", "category.name as category_name")
+        .innerJoin("category", "category.id", "post.category_id")
+        .innerJoin("user", "user.id", "post.user_id")
+        .select(
+          "post.*",
+          "category.name as category_name",
+          "user.name as user_name",
+          "user.image as user_image"
+        )
         .where({ user_id: id })
         .limit(limit)
         .offset(offset)
@@ -113,6 +119,13 @@ export async function paginatedResults(
       posts = await knex<Post>("post")
         .join("category", "category.id", "post.category_id")
         .select("post.*", "category.name as category_name")
+        .innerJoin("user", "user.id", "post.user_id")
+        .select(
+          "post.*",
+          "category.name as category_name",
+          "user.name as user_name",
+          "user.image as user_image"
+        )
         .limit(limit)
         .offset(offset)
         .orderBy("post.id", "desc")
