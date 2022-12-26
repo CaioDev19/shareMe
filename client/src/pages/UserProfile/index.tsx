@@ -14,10 +14,11 @@ export function UserProfile() {
   const { id } = useParams()
   const { isSuccess, data, isFetching, hasNextPage, fetchNextPage } =
     useInfiniteQuery(["userPosts", id as string], api.listUserPosts, {
-      getNextPageParam: (lastPage, pages) => {
-        if (pages.length >= lastPage.data.totalPages) return undefined
-
-        return lastPage.data.currentPage + 1
+      getNextPageParam: (lastPage, _pages) => {
+        if (lastPage.data.currentPage < lastPage.data.totalPages) {
+          return lastPage.data.currentPage + 1
+        }
+        return undefined
       },
     })
   const { user, signOut } = useUser()
