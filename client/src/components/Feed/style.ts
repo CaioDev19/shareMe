@@ -4,8 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: flex-start;
+  gap: 1.25rem;
 
   width: 100%;
   max-width: 2100px;
