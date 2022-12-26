@@ -10,7 +10,12 @@ export function Post({ post }: Props) {
   return (
     <Sc.Container>
       <Sc.PostImage src={post.image} alt={post.image_name} />
-      <UserInfo />
+      <UserInfo
+        user={{
+          name: post.user_name,
+          image: post.user_image,
+        }}
+      />
     </Sc.Container>
   )
 }

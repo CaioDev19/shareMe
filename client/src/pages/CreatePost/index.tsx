@@ -15,8 +15,10 @@ import { FaTrash } from "react-icons/fa"
 import { useCreatePost } from "../../hooks/query/useCreatePost"
 import Spinner from "react-bootstrap/Spinner"
 import { UserInfo } from "../../components/UserInfo"
+import { useUser } from "../../hooks/useUser"
 
 export function CreatePost() {
+  const { user } = useUser()
   const [imageBackground, setimageBackground] = useState<string>("")
   const [isImageBeingUploaded, setIsImageBeingUploaded] =
     useState<boolean>(false)
@@ -174,7 +176,12 @@ export function CreatePost() {
           }
           size="exl"
         />
-        <UserInfo />
+        <UserInfo
+          user={{
+            name: user.userData.name,
+            image: user.userData.image,
+          }}
+        />
         <Input
           name="description"
           type="text"

@@ -22,6 +22,8 @@ export interface Post {
   image: string
   description: string
   user_id: string
+  user_name: string
+  user_image: string
   category_id: number
   category_name: string
 }

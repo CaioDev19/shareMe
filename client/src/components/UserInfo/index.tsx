@@ -1,17 +1,18 @@
 import * as Sc from "./style"
 import { Text } from "../../global/styles/Typography"
-import { useUser } from "../../hooks/useUser"
 
 interface Props {
   size?: "sml" | "rgl" | "exl"
+  user: {
+    name: string
+    image: string
+  }
 }
 
-export function UserInfo({ size }: Props) {
-  const { user } = useUser()
-
+export function UserInfo({ user, size }: Props) {
   return (
     <Sc.WrapperUserInfo>
-      <img src={user.userData.image} alt="profile" />
+      <img src={user.image} alt="profile" />
       <Text
         type="span"
         as="span"
@@ -19,7 +20,7 @@ export function UserInfo({ size }: Props) {
         color="black"
         weight="sstr"
       >
-        {user.userData.name}
+        {user.name}
       </Text>
     </Sc.WrapperUserInfo>
   )
