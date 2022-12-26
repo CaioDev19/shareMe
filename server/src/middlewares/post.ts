@@ -86,7 +86,7 @@ export async function paginatedResults(
   next: NextFunction
 ) {
   const page = Number(req.query.page) || 1
-  const limit = Number(req.query.limit) || 20
+  const limit = Number(req.query.limit) || 10
   const totalPages = <number>req.totalPages
   const offset = (page - 1) * limit
   const { id } = req.params
