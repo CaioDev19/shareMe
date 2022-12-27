@@ -1,7 +1,7 @@
 import knex from "../config/dataBase"
 import { Post } from "../interfaces/db"
 
-type tables = "user" | "category"
+type tables = "user" | "category" | "post" | "comment"
 
 interface DbResponse<T> {
   response: boolean

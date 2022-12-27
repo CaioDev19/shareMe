@@ -1,6 +1,7 @@
 import { Request } from "express"
 import { Query, ParamsDictionary } from "express-serve-static-core"
-import { Post, User } from "./db"
+import { User } from "./db"
+import { PostResponse } from "./response"
 
 export interface CustomRequest extends Request {
   loggedUser?: User
@@ -10,7 +11,7 @@ export interface CustomRequest extends Request {
   paginatedPosts?: {
     totalPages: number
     currentPage: number
-    results: Post[]
+    results: PostResponse[]
   }
   [index: string]: any
 }

@@ -9,6 +9,7 @@ import { ValidationPost } from "../validators/postSchema"
 import { Category, Post } from "../interfaces/db"
 import knex from "../config/dataBase"
 import { convertToBase64Url } from "../utils/convert"
+import { PostResponse } from "../interfaces/response"
 
 export async function checkIfCategoryExists(
   req: CustomBodyRequest<ValidationPost>,
@@ -93,22 +94,14 @@ export async function paginatedResults(
 
   let posts: Post[] | undefined
 
-  if (typeof id !== "undefined") {
-    try {
+  try {
+    if (typeof id !== "undefined") {
       posts = await getPostsFromDatabase({ id, limit, offset })
-    } catch {
-      return res
-        .status(500)
-        .json({ message: "Server internal error." })
-    }
-  } else {
-    try {
+    } else {
       posts = await getPostsFromDatabase({ limit, offset })
-    } catch {
-      return res
-        .status(500)
-        .json({ message: "Server internal error." })
     }
+  } catch {
+    return res.status(500).json({ message: "Server internal error." })
   }
 
   if (typeof posts === "undefined") {
@@ -119,10 +112,31 @@ export async function paginatedResults(
     post.image = convertToBase64Url(<Buffer>post.image)
   })
 
+  const results: PostResponse[] = posts.map((post) => {
+    return {
+      id: post.id,
+      title: post.title,
+      image: {
+        name: post.image_name,
+        data: <string>post.image,
+      },
+      description: post.description,
+      user: {
+        id: post.user_id,
+        name: post.user_name,
+        image: post.user_image,
+      },
+      category: {
+        id: post.category_id,
+        name: <string>post.category_name,
+      },
+    }
+  })
+
   req.paginatedPosts = {
     totalPages,
     currentPage: totalPages === 0 ? 0 : page,
-    results: posts,
+    results,
   }
   next()
 }

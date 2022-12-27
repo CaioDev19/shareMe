@@ -2,13 +2,8 @@ import fs from "fs/promises"
 import sharp from "sharp"
 import path from "path"
 
-export async function deleteUploadedImages(
-  maxIterations: number = Infinity,
-  iteration: number = 0
-) {
+export async function deleteUploadedImages() {
   try {
-    if (iteration >= maxIterations) return
-
     const files = await fs.readdir(path.resolve("./src/uploads"))
 
     for (const file of files) {
@@ -18,10 +13,6 @@ export async function deleteUploadedImages(
   } catch {
     return
   }
-
-  setTimeout(() => {
-    deleteUploadedImages(maxIterations, iteration + 1)
-  }, 3600000)
 }
 
 export async function compressFile(
