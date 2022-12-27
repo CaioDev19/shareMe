@@ -9,11 +9,11 @@ interface Props {
 export function Post({ post }: Props) {
   return (
     <Sc.Container>
-      <Sc.PostImage src={post.image} alt={post.image_name} />
+      <Sc.PostImage src={post.image.data} alt={post.image.name} />
       <UserInfo
         user={{
-          name: post.user_name,
-          image: post.user_image,
+          name: post.user.name,
+          image: post.user.image,
         }}
       />
     </Sc.Container>

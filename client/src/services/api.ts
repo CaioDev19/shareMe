@@ -17,15 +17,22 @@ export interface UserApi {
 }
 
 export interface Post {
+  id: number
+  description?: string | undefined
   title: string
-  image_name: string
-  image: string
-  description: string
-  user_id: string
-  user_name: string
-  user_image: string
-  category_id: number
-  category_name: string
+  category: {
+    id: number
+    name: string
+  }
+  user: {
+    id: string
+    name: string
+    image: string
+  }
+  image: {
+    name: string
+    data: string
+  }
 }
 
 export interface Posts {
