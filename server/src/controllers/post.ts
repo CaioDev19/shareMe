@@ -3,14 +3,19 @@ import knex from "../config/dataBase"
 import {
   CustomBodyRequest,
   CustomParamsQueryRequest,
+  CustomParamsRequest,
   CustomQueryRequest,
   pagination,
 } from "../interfaces/express"
 import { ValidationPost } from "../validators/postSchema"
 import { convertToBase64Url } from "../utils/convert"
 import { compressFile } from "../utils/file"
-import { Post, User } from "../interfaces/db"
-import { PostResponse } from "../interfaces/response"
+import { Post, User, Comment } from "../interfaces/db"
+import {
+  commentResponse,
+  PostDetail,
+  PostResponse,
+} from "../interfaces/response"
 
 export async function makePost(
   req: CustomBodyRequest<ValidationPost>,
@@ -78,4 +83,86 @@ export async function listUserPosts(
   res: Response<typeof req.paginatedPosts>
 ) {
   res.status(200).json(req!.paginatedPosts)
+}
+
+export async function listPostById(
+  req: CustomParamsRequest<{ id?: string }>,
+  res: Response<PostDetail | { message: string }>
+) {
+  const { id } = req.params
+
+  try {
+    const post = await knex<Post>("post")
+      .select(
+        "post.*",
+        "category.name as category_name",
+        "user.name as user_name",
+        "user.image as user_image"
+      )
+      .innerJoin("category", "category.id", "post.category_id")
+      .innerJoin("user", "user.id", "post.user_id")
+      .where("post.id", Number(id))
+      .first()
+
+    const comments = await knex<Comment>("comment")
+      .select(
+        "comment.id",
+        "comment.description as text",
+        "comment.user_id",
+        "user.name as user_name",
+        "user.image as user_image"
+      )
+      .innerJoin("user", "user.id", "comment.user_id")
+      .where("comment.post_id", Number(id))
+      .orderBy("comment.id", "asc")
+
+    if (
+      typeof post === "undefined" ||
+      typeof comments === "undefined"
+    ) {
+      return res
+        .status(500)
+        .json({ message: "Server internal error." })
+    }
+
+    post.image = convertToBase64Url(<Buffer>post.image)
+
+    const formatedComments: commentResponse[] = comments.map(
+      (comment) => {
+        return {
+          id: comment.id,
+          text: comment.text,
+          user: {
+            id: comment.user_id,
+            name: comment.user_name,
+            image: comment.user_image,
+          },
+        }
+      }
+    )
+
+    const response: PostDetail = {
+      id: post.id,
+      title: post.title,
+      image: {
+        name: post.image_name,
+        data: post.image,
+      },
+      description: post.description,
+      user: {
+        id: post.user_id,
+        name: post.user_name,
+        image: <string>post.user_image,
+      },
+      category: {
+        id: post.category_id,
+        name: post.category_name,
+      },
+      comments: formatedComments,
+    }
+
+    return res.status(200).json(response)
+  } catch {
+    return res.status(500).json({ message: "Server internal error." })
+  }
 }

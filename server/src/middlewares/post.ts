@@ -3,6 +3,7 @@ import {
   CustomBodyRequest,
   CustomParamsQueryRequest,
   pagination,
+  CustomParamsRequest,
 } from "../interfaces/express"
 import { getPostsFromDatabase, isInTheDataBase } from "../utils/db"
 import { ValidationPost } from "../validators/postSchema"
@@ -139,4 +140,23 @@ export async function paginatedResults(
     results,
   }
   next()
+}
+
+export async function checkIfPostExits(
+  req: CustomParamsRequest<{ id?: string }>,
+  res: Response,
+  next: NextFunction
+) {
+  const { id } = req.params
+
+  const { response } = await isInTheDataBase<Post>(
+    { id: Number(id) },
+    "post"
+  )
+
+  if (!response) {
+    return res.status(404).json({ mensagem: "Post not found." })
+  }
+
+  return next()
 }

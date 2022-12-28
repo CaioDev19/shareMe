@@ -21,3 +21,11 @@ export interface Post extends PostData {
 }
 
 export type User = z.infer<typeof userSchema>["body"]
+
+export interface Comment {
+  id: number
+  description: string
+  user_id: string
+  user_name: string
+  user_image: string
+}

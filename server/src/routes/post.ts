@@ -2,12 +2,14 @@ import express from "express"
 import multer from "multer"
 import { storage } from "../config/multerConfig"
 import {
+  listPostById,
   listPosts,
   listUserPosts,
   makePost,
 } from "../controllers/post"
 import {
   checkIfCategoryExists,
+  checkIfPostExits,
   checkIfThePageExists,
   paginatedResults,
 } from "../middlewares/post"
@@ -27,6 +29,8 @@ router
     makePost
   )
   .get(checkIfThePageExists, paginatedResults, listPosts)
+
+router.get("/detail/:id", checkIfPostExits, listPostById)
 
 router.get(
   "/:id",
