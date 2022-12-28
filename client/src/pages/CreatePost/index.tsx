@@ -15,10 +15,10 @@ import { FaTrash } from "react-icons/fa"
 import { useCreatePost } from "../../hooks/query/useCreatePost"
 import Spinner from "react-bootstrap/Spinner"
 import { UserInfo } from "../../components/UserInfo"
-import { useUser } from "../../hooks/useUser"
+import { useLoggedUser } from "../../hooks/useLoggedUser"
 
 export function CreatePost() {
-  const { user } = useUser()
+  const { user } = useLoggedUser()
   const [imageBackground, setimageBackground] = useState<string>("")
   const [isImageBeingUploaded, setIsImageBeingUploaded] =
     useState<boolean>(false)

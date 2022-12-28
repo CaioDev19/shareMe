@@ -2,8 +2,8 @@ import styled from "styled-components"
 import { Button as StyledButton } from "../../global/styles/Button"
 
 export const Container = styled.div`
-  width: 80%;
-  max-width: 1435px;
+  width: 95%;
+  max-width: 1635px;
   min-width: 845px;
 
   margin: 0 auto;
@@ -17,20 +17,22 @@ export const Container = styled.div`
   border-radius: 0.5rem;
 `
 export const LeftContent = styled.div`
-  width: 50%;
-  flex-grow: 1;
   height: 100%;
+  min-width: 50%;
 `
 
 export const PostImage = styled.img`
   width: 100%;
+  max-height: 85vh;
+  max-width: 1000px;
+
   height: auto;
   border-radius: 0.5rem;
 `
 
 export const RightContent = styled.div`
-  width: 50%;
   padding: 1.15rem 0;
+  flex-grow: 1;
   padding-right: 1.25rem;
   margin-bottom: auto;
 `

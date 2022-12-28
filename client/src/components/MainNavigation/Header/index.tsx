@@ -1,11 +1,11 @@
 import * as Sc from "./style"
 import { BiSearchAlt2 } from "react-icons/bi"
-import { useUser } from "../../../hooks/useUser"
+import { useLoggedUser } from "../../../hooks/useLoggedUser"
 import { AiOutlinePlus } from "react-icons/ai"
 import { useNavigate } from "react-router-dom"
 
 export function Header() {
-  const { user } = useUser()
+  const { user } = useLoggedUser()
   const navigate = useNavigate()
 
   return (

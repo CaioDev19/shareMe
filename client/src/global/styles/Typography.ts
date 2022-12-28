@@ -19,6 +19,8 @@ export const Text = styled.p<Props>`
   color: ${({ theme, color }) => {
     return color ? theme.COLORS[color] : theme.COLORS.black
   }};
+  word-wrap: break-word;
+  word-break: break-all;
 
   ${(props) => {
     switch (props.type) {
@@ -45,8 +47,6 @@ export const Text = styled.p<Props>`
               ? theme.FONT_SIZE[props.size]
               : theme.FONT_SIZE.rgl};
           line-height: 1.3rem;
-          word-wrap: break-word;
-          word-break: break-all;
         `
       case "span":
         return css`

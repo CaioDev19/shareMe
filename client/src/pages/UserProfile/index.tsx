@@ -1,16 +1,23 @@
 import { useParams } from "react-router-dom"
 import { Text } from "../../global/styles/Typography"
-import { useUser } from "../../hooks/useUser"
+import { useLoggedUser } from "../../hooks/useLoggedUser"
 import { Button } from "../../global/styles/Button"
 import { IoMdLogOut } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import * as Sc from "./style"
 import { Feed } from "../../components/Feed"
+import { useUser } from "../../hooks/query/useUser"
+import { Navigate } from "react-router-dom"
 
 export function UserProfile() {
   const { id } = useParams()
-  const { user, signOut } = useUser()
+  const { signOut } = useLoggedUser()
   const navigate = useNavigate()
+  const { data, isSuccess, shouldSignOut } = useUser(id as string)
+
+  if (shouldSignOut) {
+    return <Navigate to="/login" />
+  }
 
   return (
     <Sc.Container>
@@ -25,10 +32,14 @@ export function UserProfile() {
         </Sc.LogOutBtn>
       </Sc.Banner>
       <Sc.UserInfoContainer>
-        <Sc.UserImage src={user.userData.image} alt="User image" />
-        <Text type="title" as="h2" size="exl" weight="sstr">
-          {user.userData.name}
-        </Text>
+        {isSuccess && (
+          <>
+            <Sc.UserImage src={data.data.image} alt="User image" />
+            <Text type="title" as="h2" size="exl" weight="sstr">
+              {data.data.name}
+            </Text>
+          </>
+        )}
         <Sc.ButtonWrapper>
           <Button
             size="sml"

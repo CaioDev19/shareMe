@@ -104,3 +104,11 @@ export function listPostById({
 }): Promise<AxiosResponse<Post>> {
   return api.get(`/post//detail/${queryKey[1]}`)
 }
+
+export function getUserById({
+  queryKey,
+}: {
+  queryKey: string[]
+}): Promise<AxiosResponse<user & { email: string }>> {
+  return api.get(`/user/${queryKey[1]}`)
+}

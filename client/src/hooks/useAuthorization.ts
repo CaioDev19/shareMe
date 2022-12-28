@@ -1,9 +1,9 @@
 import { useEffect } from "react"
-import { useUser } from "../hooks/useUser"
+import { useLoggedUser } from "./useLoggedUser"
 import { api } from "../services/api"
 
 export function useAuthorization() {
-  const { user } = useUser()
+  const { user } = useLoggedUser()
 
   useEffect(() => {
     api.defaults.headers.common[

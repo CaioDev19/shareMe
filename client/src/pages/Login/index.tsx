@@ -3,14 +3,14 @@ import { GoogleLogin } from "react-google-login"
 import backgroundVideo from "../../assets/share.mp4"
 import logoWhite from "../../assets/logowhite.png"
 import { useNavigate, Navigate } from "react-router-dom"
-import { useUser } from "../../hooks/useUser"
+import { useLoggedUser } from "../../hooks/useLoggedUser"
 import { UserApi } from "../../services/api"
 import { AxiosResponse } from "axios"
 import { useLogIn } from "../../hooks/query/useLogIn"
 
 export function Login() {
   const navigate = useNavigate()
-  const { user, setUser } = useUser()
+  const { user, setUser } = useLoggedUser()
 
   function onSucess(response: AxiosResponse<UserApi>): void {
     setUser({

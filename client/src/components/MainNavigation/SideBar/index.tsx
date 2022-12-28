@@ -4,13 +4,13 @@ import { BsHouse } from "react-icons/bs"
 import { MdOutlineKeyboardArrowRight } from "react-icons/md"
 import { Text } from "../../../global/styles/Typography"
 import { Category } from "./Category"
-import { useUser } from "../../../hooks/useUser"
+import { useLoggedUser } from "../../../hooks/useLoggedUser"
 import { Navigate } from "react-router-dom"
 import { useCategories } from "../../../hooks/query/useCategories"
 import { useNavigate } from "react-router-dom"
 
 export function SideBar() {
-  const { user } = useUser()
+  const { user } = useLoggedUser()
   const navigate = useNavigate()
   const { data: response, isLoading, shouldSignOut } = useCategories()
 
