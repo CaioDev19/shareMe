@@ -2,16 +2,20 @@ import * as Sc from "./style"
 import { Text } from "../../global/styles/Typography"
 
 interface Props {
-  size?: "sml" | "rgl" | "exl"
+  size?: "sml"
   user: {
     name: string
     image: string
   }
+  onClick?: () => void
 }
 
-export function UserInfo({ user, size }: Props) {
+export function UserInfo({ user, size, onClick }: Props) {
   return (
-    <Sc.WrapperUserInfo>
+    <Sc.WrapperUserInfo
+      size={size && size}
+      onClick={onClick ? onClick : () => {}}
+    >
       <img src={user.image} alt="profile" />
       <Text
         type="span"

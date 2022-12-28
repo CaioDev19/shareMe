@@ -7,6 +7,7 @@ import { CreatePost } from "../pages/CreatePost"
 import { MainNavigation } from "../components/MainNavigation"
 import { JustSideBar } from "../components/MainNavigation/JustSideBar"
 import { UserProfile } from "../pages/UserProfile"
+import { PostDetail } from "../pages/PostDetail"
 
 export function MainRoutes() {
   return (
@@ -18,6 +19,7 @@ export function MainRoutes() {
         <Route element={<MainNavigation />}>
           <Route path="/home" element={<Home />} />
           <Route path="/create_post" element={<CreatePost />} />
+          <Route path="/post_detail/:id" element={<PostDetail />} />
         </Route>
         <Route element={<JustSideBar />}>
           <Route path="user_profile/:id" element={<UserProfile />} />

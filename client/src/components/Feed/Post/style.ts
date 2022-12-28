@@ -10,6 +10,8 @@ export const Container = styled.div`
   width: 20%;
   max-width: 400px;
   min-width: 274px;
+
+  cursor: pointer;
 `
 export const PostImage = styled.img`
   width: 100%;

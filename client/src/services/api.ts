@@ -16,6 +16,18 @@ export interface UserApi {
   token: string
 }
 
+type user = {
+  id: string
+  name: string
+  image: string
+}
+
+export type comment = {
+  id: number
+  text: string
+  user: user
+}
+
 export interface Post {
   id: number
   description?: string | undefined
@@ -24,15 +36,12 @@ export interface Post {
     id: number
     name: string
   }
-  user: {
-    id: string
-    name: string
-    image: string
-  }
+  user: user
   image: {
     name: string
     data: string
   }
+  comments?: comment[]
 }
 
 export interface Posts {
@@ -86,4 +95,12 @@ export function listAllPosts({
   pageParam?: number
 }): Promise<AxiosResponse<Posts>> {
   return api.get(`/post/?page=${pageParam}`)
+}
+
+export function listPostById({
+  queryKey,
+}: {
+  queryKey: string[]
+}): Promise<AxiosResponse<Post>> {
+  return api.get(`/post//detail/${queryKey[1]}`)
 }
