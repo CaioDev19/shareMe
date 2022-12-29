@@ -112,3 +112,10 @@ export function getUserById({
 }): Promise<AxiosResponse<user & { email: string }>> {
   return api.get(`/user/${queryKey[1]}`)
 }
+
+export function makeComment(config: {
+  body: { description: string }
+  postId: string
+}): Promise<AxiosResponse<comment>> {
+  return api.post(`/post/${config.postId}/comment`, config.body)
+}

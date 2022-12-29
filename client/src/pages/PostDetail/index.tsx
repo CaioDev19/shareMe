@@ -6,6 +6,13 @@ import { useDetailedPost } from "../../hooks/query/useDetailedPost"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
 import { useNavigate } from "react-router-dom"
 import * as Sc from "./style"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import {
+  commentSchema,
+  newComment,
+} from "../../utils/validators/commentSchema"
+import { useCreateComment } from "../../hooks/query/useCreateComment"
 
 export function PostDetail() {
   const { id } = useParams()
@@ -16,6 +23,23 @@ export function PostDetail() {
     isLoading,
     shouldSignOut,
   } = useDetailedPost(id as string)
+  const { handleSubmit, control, reset } = useForm({
+    resolver: zodResolver(commentSchema),
+    defaultValues: {
+      description: "",
+    },
+  })
+  const { mutate, isLoading: isCommentLoading } = useCreateComment(
+    id as string
+  )
+
+  function handleData(data: newComment) {
+    mutate({
+      body: data,
+      postId: id as string,
+    })
+    reset()
+  }
 
   if (isLoading) {
     return <Spinner animation="border" variant="danger" />
@@ -83,13 +107,32 @@ export function PostDetail() {
               })}
             </Sc.CommentsWrapper>
           )}
-        <Sc.MakeCommentWrapper>
+        <Sc.CommentForm onSubmit={handleSubmit(handleData)}>
           <Sc.LoggedUserImage src={user.userData.image} />
-          <Sc.CommentInput type="text" placeholder="Add a comment" />
-          <Sc.Button size="sml" background="red" color="white">
-            Done
+          <Sc.CommentInput
+            type="text"
+            control={control}
+            name="description"
+            placeholder="Add a comment..."
+          />
+          <Sc.Button
+            type="submit"
+            size="sml"
+            background="red"
+            color="white"
+          >
+            {isCommentLoading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                variant="light"
+                size="sm"
+              />
+            ) : (
+              "Done"
+            )}
           </Sc.Button>
-        </Sc.MakeCommentWrapper>
+        </Sc.CommentForm>
       </Sc.RightContent>
     </Sc.Container>
   )

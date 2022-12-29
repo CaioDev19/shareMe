@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import { Button as StyledButton } from "../../global/styles/Button"
+import { Input } from "../../components/Form/Input"
+import { Form } from "../../components/Form"
 
 export const Container = styled.div`
   width: 95%;
@@ -74,7 +76,7 @@ export const Comment = styled.div`
   gap: 0.5rem;
 `
 
-export const MakeCommentWrapper = styled.div`
+export const CommentForm = styled(Form)`
   display: flex;
   gap: 0.5rem;
   width: 100%;
@@ -87,35 +89,16 @@ export const LoggedUserImage = styled.img`
   border-radius: 50%;
 `
 
-export const CommentInput = styled.input`
-  all: unset;
-  box-sizing: border-box;
-  cursor: pointer;
-
-  width: 100%;
-
+export const CommentInput = styled(Input)`
   border: 1px solid ${({ theme }) => theme.COLORS.gray};
   border-radius: 1rem;
 
-  padding: 0.4rem 0.5rem;
+  width: 100%;
 
-  &::placeholder {
-    text-decoration: none;
-    font-weight: 900;
-    font-size: 16px;
-    color: ${({ theme }) => theme.COLORS.black};
-    line-height: 2.1rem;
-    opacity: 0.5;
-  }
+  padding: 0.4rem 0.5rem;
 
   &:focus {
     border: 1px solid ${({ theme }) => theme.COLORS.black};
-  }
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
   }
 `
 export const Button = styled(StyledButton)`
