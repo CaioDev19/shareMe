@@ -26,6 +26,10 @@ export interface Comment {
   id: number
   description: string
   user_id: string
-  user_name: string
-  user_image: string
+  post_id: number
+}
+
+export interface CommentJoinUser extends Comment {
+  user_name?: string
+  user_image?: string
 }

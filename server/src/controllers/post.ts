@@ -10,7 +10,12 @@ import {
 import { ValidationPost } from "../validators/postSchema"
 import { convertToBase64Url } from "../utils/convert"
 import { compressFile } from "../utils/file"
-import { Post, User, Comment } from "../interfaces/db"
+import {
+  Post,
+  User,
+  Comment,
+  CommentJoinUser,
+} from "../interfaces/db"
 import {
   commentResponse,
   PostDetail,
@@ -104,7 +109,7 @@ export async function listPostById(
       .where("post.id", Number(id))
       .first()
 
-    const comments = await knex<Comment>("comment")
+    const comments = await knex<CommentJoinUser>("comment")
       .select(
         "comment.id",
         "comment.description as text",
@@ -162,6 +167,45 @@ export async function listPostById(
     }
 
     return res.status(200).json(response)
+  } catch {
+    return res.status(500).json({ message: "Server internal error." })
+  }
+}
+
+export async function createComment(
+  req: CustomBodyRequest<{ description: string }>,
+  res: Response
+) {
+  const { description } = req.body
+  const user = <User>req.loggedUser
+  const { id } = req.params
+
+  try {
+    const comment = await knex<Comment>("comment")
+      .insert({
+        description,
+        user_id: user.id,
+        post_id: Number(id),
+      })
+      .returning("*")
+
+    if (!comment) {
+      return res
+        .status(500)
+        .json({ message: "Server internal error." })
+    }
+
+    const response: commentResponse = {
+      id: comment[0].id,
+      text: comment[0].description,
+      user: {
+        id: user.id,
+        name: user.name,
+        image: <string>user.image,
+      },
+    }
+
+    return res.status(201).json(response)
   } catch {
     return res.status(500).json({ message: "Server internal error." })
   }
