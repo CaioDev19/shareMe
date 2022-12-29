@@ -19,7 +19,7 @@ const queryClient = new QueryClient({
     },
   },
 })
-console.log("first commit")
+
 function App() {
   useEffect(() => {
     function start(): void {

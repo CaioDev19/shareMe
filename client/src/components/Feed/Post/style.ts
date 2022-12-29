@@ -5,12 +5,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
-  flex-grow: 1;
-
-  width: 20%;
-  max-width: 400px;
-  min-width: 274px;
-
   cursor: pointer;
 `
 export const PostImage = styled.img`

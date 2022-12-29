@@ -1,4 +1,3 @@
-import { Fragment } from "react"
 import { Post } from "../../components/Feed/Post"
 import { Waypoint } from "react-waypoint"
 import * as Sc from "./style"
@@ -6,6 +5,7 @@ import { usePosts } from "../../hooks/query/usePosts"
 import Spinner from "react-bootstrap/esm/Spinner"
 import { Text } from "../../global/styles/Typography"
 import { Navigate } from "react-router-dom"
+import Masonry from "@mui/lab/Masonry"
 
 interface Props {
   id?: string
@@ -38,25 +38,32 @@ export function Feed({ id }: Props) {
   return (
     <>
       <Sc.Container>
-        {isSuccess &&
-          data.pages.map((page) => {
-            return page.data.results.map((post, i) => {
-              return (
-                <Fragment key={i}>
-                  <Post post={post} />
-                  {page.data.results.length - 2 === i && (
-                    <Waypoint
-                      onEnter={() => {
-                        if (!hasNextPage) return
-                        fetchNextPage()
-                        console.log("Requesting more stuff")
-                      }}
-                    />
-                  )}
-                </Fragment>
-              )
-            })
-          })}
+        <Masonry
+          columns={{ xs: 1, md: 3, xl: 4 }}
+          spacing={2}
+          defaultColumns={4}
+          defaultSpacing={2}
+        >
+          {isSuccess &&
+            data.pages.map((page) => {
+              return page.data.results.map((post, i) => {
+                return (
+                  <div key={i}>
+                    <Post post={post} />
+                    {page.data.results.length - 2 === i && (
+                      <Waypoint
+                        onEnter={() => {
+                          if (!hasNextPage) return
+                          fetchNextPage()
+                          console.log("Requesting more stuff")
+                        }}
+                      />
+                    )}
+                  </div>
+                )
+              })
+            })}
+        </Masonry>
       </Sc.Container>
       {isFetching && <Spinner animation="border" variant="danger" />}
     </>

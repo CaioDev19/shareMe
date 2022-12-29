@@ -25,10 +25,6 @@ export function PostDetail() {
     return <Navigate to="/login" />
   }
 
-  function handleClickUserInfo() {
-    navigate(`/user_profile/${response!.data.user.id}`)
-  }
-
   return (
     <Sc.Container>
       <Sc.LeftContent>
@@ -46,7 +42,9 @@ export function PostDetail() {
             {response?.data.description}
           </Text>
           <UserInfo
-            onClick={handleClickUserInfo}
+            onClick={() =>
+              navigate(`/user_profile/${response!.data.user.id}`)
+            }
             user={{
               name: response!.data.user.name,
               image: response!.data.user.image,
@@ -68,6 +66,9 @@ export function PostDetail() {
                         name: comment.user.name,
                         image: comment.user.image,
                       }}
+                      onClick={() =>
+                        navigate(`/user_profile/${comment.user.id}`)
+                      }
                     />
                     <Text
                       type="paragraph"
