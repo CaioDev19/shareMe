@@ -13,6 +13,7 @@ import {
   newComment,
 } from "../../utils/validators/commentSchema"
 import { useCreateComment } from "../../hooks/query/useCreateComment"
+import { Comments } from "../../components/Comments"
 
 export function PostDetail() {
   const { id } = useParams()
@@ -80,32 +81,7 @@ export function PostDetail() {
         </Sc.PostInfoWrapper>
         {typeof response!.data.comments !== "undefined" &&
           response!.data.comments.length > 0 && (
-            <Sc.CommentsWrapper>
-              {response!.data.comments.map((comment) => {
-                return (
-                  <Sc.Comment key={comment.id}>
-                    <UserInfo
-                      size="sml"
-                      user={{
-                        name: comment.user.name,
-                        image: comment.user.image,
-                      }}
-                      onClick={() =>
-                        navigate(`/user_profile/${comment.user.id}`)
-                      }
-                    />
-                    <Text
-                      type="paragraph"
-                      as="p"
-                      weight="wek"
-                      position="left"
-                    >
-                      {comment.text}
-                    </Text>
-                  </Sc.Comment>
-                )
-              })}
-            </Sc.CommentsWrapper>
+            <Comments comments={response!.data.comments} />
           )}
         <Sc.CommentForm onSubmit={handleSubmit(handleData)}>
           <Sc.LoggedUserImage src={user.userData.image} />

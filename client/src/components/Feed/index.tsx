@@ -10,6 +10,7 @@ import Masonry from "@mui/lab/Masonry"
 interface Props {
   id?: string
 }
+
 export function Feed({ id }: Props) {
   const {
     isSuccess,

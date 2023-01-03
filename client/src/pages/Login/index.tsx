@@ -7,6 +7,7 @@ import { useLoggedUser } from "../../hooks/useLoggedUser"
 import { UserApi } from "../../services/api"
 import { AxiosResponse } from "axios"
 import { useLogIn } from "../../hooks/query/useLogIn"
+import { User } from "../../services/api"
 
 export function Login() {
   const navigate = useNavigate()
@@ -20,21 +21,14 @@ export function Login() {
     navigate("/home")
   }
 
-  function onError(error: any): void {
-    console.log(error.message)
+  function onError(error: AxiosResponse<{ message: string }>): void {
+    console.log(error.data.message)
   }
 
   const { mutate } = useLogIn(onSucess, onError)
 
   function handleLogin(googleResponse: any): void {
-    interface Iuser {
-      id: string
-      image: string
-      name: string
-      email: string
-    }
-
-    const newUser: Iuser = {
+    const newUser: User = {
       id: googleResponse.profileObj.googleId,
       image: googleResponse.profileObj.imageUrl,
       name: googleResponse.profileObj.name,

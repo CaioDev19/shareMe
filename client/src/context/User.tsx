@@ -1,23 +1,19 @@
 import { createContext, useMemo, Dispatch, useCallback } from "react"
 import { useLocalStorage } from "../hooks/useLocalStorage"
+import { User } from "../services/api"
 
 interface Props {
   children: JSX.Element
 }
 
-export interface User {
-  userData: {
-    email: string
-    id: string
-    image: string
-    name: string
-  }
+export interface ContextUser {
+  userData: User
   token: string
 }
 
 export interface IContext {
-  user: User
-  setUser: Dispatch<React.SetStateAction<User | null>>
+  user: ContextUser
+  setUser: Dispatch<React.SetStateAction<ContextUser | null>>
   signOut: () => void
 }
 
@@ -34,21 +30,18 @@ export function UserProvider({ children }: Props) {
     token: "",
   })
 
-  const signOut = useCallback(
-    function signOut() {
-      remove()
-      setUser({
-        userData: {
-          email: "",
-          id: "",
-          image: "",
-          name: "",
-        },
-        token: "",
-      })
-    },
-    [remove, setUser]
-  )
+  const signOut = useCallback(() => {
+    remove()
+    setUser({
+      userData: {
+        email: "",
+        id: "",
+        image: "",
+        name: "",
+      },
+      token: "",
+    })
+  }, [remove, setUser])
 
   const valueProvider = useMemo(() => {
     return { user, setUser, signOut }

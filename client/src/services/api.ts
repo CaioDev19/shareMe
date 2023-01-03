@@ -6,26 +6,28 @@ export interface Category {
   image: string
 }
 
+export interface User {
+  id: string
+  email: string
+  image: string
+  name: string
+}
+
 export interface UserApi {
-  user: {
-    email: string
-    id: string
-    image: string
-    name: string
-  }
+  user: User
   token: string
 }
 
-type user = {
+interface PostUser {
   id: string
   name: string
   image: string
 }
 
-export type comment = {
+export interface Comment {
   id: number
   text: string
-  user: user
+  user: PostUser
 }
 
 export interface Post {
@@ -36,18 +38,23 @@ export interface Post {
     id: number
     name: string
   }
-  user: user
+  user: PostUser
   image: {
     name: string
     data: string
   }
-  comments?: comment[]
+  comments?: Comment[]
 }
 
 export interface Posts {
   totalPages: number
   currentPage: number
   results: Post[]
+}
+
+interface QueryRequest {
+  pageParam?: number
+  queryKey: string[]
 }
 
 export const api = axios.create({
@@ -58,18 +65,16 @@ export const api = axios.create({
   },
 })
 
-export function logIn(body: object): Promise<AxiosResponse<UserApi>> {
+export function logIn(body: User): Promise<AxiosResponse<UserApi>> {
   return api.post("/login", body)
 }
 
-export function listCategories(
-  body: object
-): Promise<AxiosResponse<Category[]>> {
-  return api.get("/category", body)
+export function listCategories(): Promise<AxiosResponse<Category[]>> {
+  return api.get("/category")
 }
 
 export function createPost(
-  body: object
+  body: FormData
 ): Promise<AxiosResponse<Post>> {
   return api.post("/post", body, {
     headers: {
@@ -82,40 +87,31 @@ export function createPost(
 export function listUserPosts({
   pageParam = 1,
   queryKey,
-}: {
-  pageParam?: number
-  queryKey: string[]
-}): Promise<AxiosResponse<Posts>> {
+}: QueryRequest): Promise<AxiosResponse<Posts>> {
   return api.get(`/post/${queryKey[1]}/?page=${pageParam}`)
 }
 
 export function listAllPosts({
   pageParam = 1,
-}: {
-  pageParam?: number
-}): Promise<AxiosResponse<Posts>> {
+}: QueryRequest): Promise<AxiosResponse<Posts>> {
   return api.get(`/post/?page=${pageParam}`)
 }
 
 export function listPostById({
   queryKey,
-}: {
-  queryKey: string[]
-}): Promise<AxiosResponse<Post>> {
+}: QueryRequest): Promise<AxiosResponse<Post>> {
   return api.get(`/post//detail/${queryKey[1]}`)
 }
 
 export function getUserById({
   queryKey,
-}: {
-  queryKey: string[]
-}): Promise<AxiosResponse<user & { email: string }>> {
+}: QueryRequest): Promise<AxiosResponse<User>> {
   return api.get(`/user/${queryKey[1]}`)
 }
 
 export function makeComment(config: {
   body: { description: string }
   postId: string
-}): Promise<AxiosResponse<comment>> {
+}): Promise<AxiosResponse<Comment>> {
   return api.post(`/post/${config.postId}/comment`, config.body)
 }
