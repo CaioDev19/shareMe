@@ -13,6 +13,6 @@ export function useSignOutOnError(): [
       signOut()
     }
   }, [shouldSignOut, signOut])
-
+  console.log("first commti")
   return [shouldSignOut, setShouldSignOut]
 }
