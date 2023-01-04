@@ -13,32 +13,23 @@ export interface User {
   name: string
 }
 
-export interface UserApi {
+export interface LogIn {
   user: User
   token: string
 }
 
-interface PostUser {
-  id: string
-  name: string
-  image: string
-}
-
 export interface Comment {
   id: number
-  text: string
-  user: PostUser
+  description: string
+  user: User
 }
 
 export interface Post {
   id: number
   description?: string | undefined
   title: string
-  category: {
-    id: number
-    name: string
-  }
-  user: PostUser
+  category: Omit<Category, "image">
+  user: User
   image: {
     name: string
     data: string
@@ -65,7 +56,7 @@ export const api = axios.create({
   },
 })
 
-export function logIn(body: User): Promise<AxiosResponse<UserApi>> {
+export function logIn(body: User): Promise<AxiosResponse<LogIn>> {
   return api.post("/login", body)
 }
 

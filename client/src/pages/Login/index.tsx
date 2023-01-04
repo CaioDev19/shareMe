@@ -4,7 +4,7 @@ import backgroundVideo from "../../assets/share.mp4"
 import logoWhite from "../../assets/logowhite.png"
 import { useNavigate, Navigate } from "react-router-dom"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
-import { UserApi } from "../../services/api"
+import { LogIn } from "../../services/api"
 import { AxiosResponse } from "axios"
 import { useLogIn } from "../../hooks/query/useLogIn"
 import { User } from "../../services/api"
@@ -13,7 +13,7 @@ export function Login() {
   const navigate = useNavigate()
   const { user, setUser } = useLoggedUser()
 
-  function onSucess(response: AxiosResponse<UserApi>): void {
+  function onSucess(response: AxiosResponse<LogIn>): void {
     setUser({
       userData: response.data.user,
       token: response.data.token,

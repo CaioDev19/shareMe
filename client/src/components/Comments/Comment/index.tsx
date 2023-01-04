@@ -22,7 +22,7 @@ export function Comment({ comment }: Props) {
         onClick={() => navigate(`/user_profile/${comment.user.id}`)}
       />
       <Text type="paragraph" as="p" weight="wek" position="left">
-        {comment.text}
+        {comment.description}
       </Text>
     </Sc.Comment>
   )
