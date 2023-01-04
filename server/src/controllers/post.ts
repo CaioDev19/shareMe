@@ -15,6 +15,7 @@ import {
   User,
   Comment,
   CommentJoinUser,
+  PostJoinUser,
 } from "../interfaces/db"
 import {
   commentResponse,
@@ -24,7 +25,7 @@ import {
 
 export async function makePost(
   req: CustomBodyRequest<ValidationPost>,
-  res: Response<PostResponse | { message: string }>
+  res: Response
 ) {
   const { title, description, category_id } = req.body.data
   const user = <User>req.loggedUser
@@ -59,11 +60,7 @@ export async function makePost(
         data: newPost[0].image,
       },
       description: newPost[0].description,
-      user: {
-        id: user.id,
-        name: user.name,
-        image: <string>user.image,
-      },
+      user,
       category: {
         id: category_id,
         name: <string>req.category_name,
@@ -78,7 +75,7 @@ export async function makePost(
 
 export async function listPosts(
   req: CustomQueryRequest<pagination>,
-  res: Response<typeof req.paginatedPosts>
+  res: Response
 ) {
   res.status(200).json(req!.paginatedPosts)
 }
@@ -92,30 +89,34 @@ export async function listUserPosts(
 
 export async function listPostById(
   req: CustomParamsRequest<{ id?: string }>,
-  res: Response<PostDetail | { message: string }>
+  res: Response
 ) {
   const { id } = req.params
 
   try {
-    const post = await knex<Post>("post")
+    const post: PostJoinUser = await knex<PostJoinUser>("post")
       .select(
         "post.*",
         "category.name as category_name",
         "user.name as user_name",
-        "user.image as user_image"
+        "user.image as user_image",
+        "user.email as user_email"
       )
       .innerJoin("category", "category.id", "post.category_id")
       .innerJoin("user", "user.id", "post.user_id")
       .where("post.id", Number(id))
       .first()
 
-    const comments = await knex<CommentJoinUser>("comment")
+    const comments: CommentJoinUser[] = await knex<CommentJoinUser>(
+      "comment"
+    )
       .select(
         "comment.id",
-        "comment.description as text",
+        "comment.description",
         "comment.user_id",
         "user.name as user_name",
-        "user.image as user_image"
+        "user.image as user_image",
+        "user.email as user_email"
       )
       .innerJoin("user", "user.id", "comment.user_id")
       .where("comment.post_id", Number(id))
@@ -136,11 +137,12 @@ export async function listPostById(
       (comment) => {
         return {
           id: comment.id,
-          text: comment.text,
+          description: comment.description,
           user: {
             id: comment.user_id,
             name: comment.user_name,
             image: comment.user_image,
+            email: comment.user_email,
           },
         }
       }
@@ -158,6 +160,7 @@ export async function listPostById(
         id: post.user_id,
         name: post.user_name,
         image: <string>post.user_image,
+        email: post.user_email,
       },
       category: {
         id: post.category_id,
@@ -197,11 +200,12 @@ export async function createComment(
 
     const response: commentResponse = {
       id: comment[0].id,
-      text: comment[0].description,
+      description: comment[0].description,
       user: {
         id: user.id,
         name: user.name,
         image: <string>user.image,
+        email: user.email,
       },
     }
 

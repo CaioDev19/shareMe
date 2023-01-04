@@ -26,7 +26,7 @@ export async function logUserIn(
       user: <User>req.userData,
       token: token,
     })
-  } catch (error) {
+  } catch {
     return res.status(500).json({ message: "Server internal error." })
   }
 }

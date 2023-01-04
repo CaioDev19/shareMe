@@ -9,7 +9,7 @@ const app: express.Application = express()
 
 app.use(cors())
 app.use(express.json())
-console.log("first commit")
+
 app.use(routes)
 
 app.listen(process.env.PORT, () => {

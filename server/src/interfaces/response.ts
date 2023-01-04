@@ -1,31 +1,27 @@
-type user = {
-  id: string
-  name: string
-  image: string
-}
-
-type category = {
-  id: number
-  name: string
-}
+import { User } from "./db"
 
 type image = {
   name: string
   data: string
 }
 
+type categoryResponse = {
+  id: number
+  name: string
+}
+
 export type commentResponse = {
   id: number
-  text: string
-  user: user
+  description: string
+  user: User
 }
 
 export interface PostResponse {
   id: number
   description?: string | undefined
   title: string
-  category: category
-  user: user
+  category: categoryResponse
+  user: User
   image: image
 }
 

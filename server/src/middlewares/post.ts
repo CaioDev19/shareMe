@@ -7,7 +7,7 @@ import {
 } from "../interfaces/express"
 import { getPostsFromDatabase, isInTheDataBase } from "../utils/db"
 import { ValidationPost } from "../validators/postSchema"
-import { Category, Post } from "../interfaces/db"
+import { Category, Post, PostJoinUser } from "../interfaces/db"
 import knex from "../config/dataBase"
 import { convertToBase64Url } from "../utils/convert"
 import { PostResponse } from "../interfaces/response"
@@ -93,7 +93,7 @@ export async function paginatedResults(
   const offset = (page - 1) * limit
   const { id } = req.params
 
-  let posts: Post[] | undefined
+  let posts: PostJoinUser[] | undefined
 
   try {
     if (typeof id !== "undefined") {
@@ -126,6 +126,7 @@ export async function paginatedResults(
         id: post.user_id,
         name: post.user_name,
         image: post.user_image,
+        email: post.user_email,
       },
       category: {
         id: post.category_id,

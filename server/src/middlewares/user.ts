@@ -67,7 +67,7 @@ export async function doesTheUserExist(
 
     req.userData = newUser[0]
     return next()
-  } catch (error) {
+  } catch {
     return res.status(500).json({ message: "Server internal error." })
   }
 }

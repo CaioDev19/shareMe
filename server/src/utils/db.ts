@@ -1,5 +1,5 @@
 import knex from "../config/dataBase"
-import { Post } from "../interfaces/db"
+import { PostJoinUser } from "../interfaces/db"
 
 type tables = "user" | "category" | "post" | "comment"
 
@@ -42,13 +42,14 @@ export async function getPostsFromDatabase({
   id,
   limit,
   offset,
-}: FuncProps): Promise<Post[]> {
-  let query = knex<Post>("post")
+}: FuncProps): Promise<PostJoinUser[]> {
+  let query = knex<PostJoinUser>("post")
     .select(
       "post.*",
       "category.name as category_name",
       "user.name as user_name",
-      "user.image as user_image"
+      "user.image as user_image",
+      "user.email as user_email"
     )
     .innerJoin("category", "category.id", "post.category_id")
     .innerJoin("user", "user.id", "post.user_id")

@@ -15,9 +15,13 @@ export interface Post extends PostData {
   image_name: string
   image: Buffer | string
   user_id: string
+}
+
+export interface PostJoinUser extends Post {
   user_name: string
   user_image: string
-  category_name?: string
+  user_email: string
+  category_name: string
 }
 
 export type User = z.infer<typeof userSchema>["body"]
@@ -30,6 +34,7 @@ export interface Comment {
 }
 
 export interface CommentJoinUser extends Comment {
-  user_name?: string
-  user_image?: string
+  user_name: string
+  user_image: string
+  user_email: string
 }
