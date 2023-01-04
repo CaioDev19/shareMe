@@ -1,28 +1,21 @@
-import { User } from "./db"
+import { User, Category, Comment } from "./db"
 
 type image = {
   name: string
   data: string
 }
 
-type categoryResponse = {
-  id: number
-  name: string
-}
-
-export type commentResponse = {
-  id: number
-  description: string
-  user: User
-}
-
 export interface PostResponse {
   id: number
   description?: string | undefined
   title: string
-  category: categoryResponse
+  category: Omit<Category, "image">
   user: User
   image: image
+}
+
+export type commentResponse = Omit<Comment, "user_id" | "post_id"> & {
+  user: User
 }
 
 export interface PostDetail extends PostResponse {
