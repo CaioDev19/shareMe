@@ -7,17 +7,12 @@ import { useNavigate } from "react-router-dom"
 import * as Sc from "./style"
 import { Feed } from "../../components/Feed"
 import { useUser } from "../../hooks/query/useUser"
-import { Navigate } from "react-router-dom"
 
 export function UserProfile() {
   const { id } = useParams()
   const { signOut } = useLoggedUser()
   const navigate = useNavigate()
-  const { data, isSuccess, shouldSignOut } = useUser(id as string)
-
-  if (shouldSignOut) {
-    return <Navigate to="/login" />
-  }
+  const { data, isSuccess } = useUser(id as string)
 
   return (
     <Sc.Container>

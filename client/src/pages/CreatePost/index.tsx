@@ -3,7 +3,6 @@ import { Input } from "../../components/Form/Input"
 import { Text } from "../../global/styles/Typography"
 import { Select } from "../../components/Form/Select"
 import { useCategories } from "../../hooks/query/useCategories"
-import { Navigate } from "react-router-dom"
 import { IoCloudUploadOutline } from "react-icons/io5"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -16,6 +15,7 @@ import { useCreatePost } from "../../hooks/query/useCreatePost"
 import Spinner from "react-bootstrap/Spinner"
 import { UserInfo } from "../../components/UserInfo"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
+import { MouseEvent } from "react"
 
 export function CreatePost() {
   const { user } = useLoggedUser()
@@ -23,11 +23,7 @@ export function CreatePost() {
   const [isImageBeingUploaded, setIsImageBeingUploaded] =
     useState<boolean>(false)
   const [isFileError, setIsFileError] = useState<boolean>(false)
-  const {
-    data: categories,
-    isSuccess,
-    shouldSignOut,
-  } = useCategories()
+  const { data: categories, isSuccess } = useCategories()
   const {
     handleSubmit,
     control,
@@ -106,15 +102,13 @@ export function CreatePost() {
     }
   }
 
-  function deleteImageBackground(e: any): void {
+  function deleteImageBackground(
+    e: MouseEvent<HTMLDivElement>
+  ): void {
     e.preventDefault()
 
     setimageBackground("")
     resetField("image")
-  }
-
-  if (shouldSignOut) {
-    return <Navigate to="/login" />
   }
 
   return (

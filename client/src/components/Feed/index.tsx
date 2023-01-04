@@ -4,7 +4,6 @@ import * as Sc from "./style"
 import { usePosts } from "../../hooks/query/usePosts"
 import Spinner from "react-bootstrap/esm/Spinner"
 import { Text } from "../../global/styles/Typography"
-import { Navigate } from "react-router-dom"
 import Masonry from "@mui/lab/Masonry"
 
 interface Props {
@@ -12,14 +11,8 @@ interface Props {
 }
 
 export function Feed({ id }: Props) {
-  const {
-    isSuccess,
-    data,
-    isFetching,
-    hasNextPage,
-    fetchNextPage,
-    shouldSignOut,
-  } = usePosts(id || undefined)
+  const { isSuccess, data, isFetching, hasNextPage, fetchNextPage } =
+    usePosts(id || undefined)
 
   if (
     typeof id !== "undefined" &&
@@ -30,10 +23,6 @@ export function Feed({ id }: Props) {
         There are no posts yet!
       </Text>
     )
-  }
-
-  if (shouldSignOut) {
-    return <Navigate to="/login" />
   }
 
   return (

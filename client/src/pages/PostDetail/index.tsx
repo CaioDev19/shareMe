@@ -1,5 +1,5 @@
 import { Spinner } from "react-bootstrap"
-import { Navigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { UserInfo } from "../../components/UserInfo"
 import { Text } from "../../global/styles/Typography"
 import { useDetailedPost } from "../../hooks/query/useDetailedPost"
@@ -19,11 +19,7 @@ export function PostDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { user } = useLoggedUser()
-  const {
-    data: response,
-    isLoading,
-    shouldSignOut,
-  } = useDetailedPost(id as string)
+  const { data: response, isLoading } = useDetailedPost(id as string)
   const { handleSubmit, control, reset } = useForm({
     resolver: zodResolver(commentSchema),
     defaultValues: {
@@ -46,16 +42,12 @@ export function PostDetail() {
     return <Spinner animation="border" variant="danger" />
   }
 
-  if (shouldSignOut) {
-    return <Navigate to="/login" />
-  }
-
   return (
     <Sc.Container>
       <Sc.LeftContent>
         <Sc.PostImage
-          src={response!.data.image.data}
-          alt={response!.data.image.name}
+          src={response?.data.image.data}
+          alt={response?.data.image.name}
         />
       </Sc.LeftContent>
       <Sc.RightContent>
@@ -68,20 +60,20 @@ export function PostDetail() {
           </Text>
           <UserInfo
             onClick={() =>
-              navigate(`/user_profile/${response!.data.user.id}`)
+              navigate(`/user_profile/${response?.data.user.id}`)
             }
             user={{
-              name: response!.data.user.name,
-              image: response!.data.user.image,
+              name: response?.data.user.name as string,
+              image: response?.data.user.image as string,
             }}
           />
           <Text type="title" as="h3" size="lrg" weight="wek">
             Comments
           </Text>
         </Sc.PostInfoWrapper>
-        {typeof response!.data.comments !== "undefined" &&
-          response!.data.comments.length > 0 && (
-            <Comments comments={response!.data.comments} />
+        {typeof response?.data.comments !== "undefined" &&
+          response?.data.comments.length > 0 && (
+            <Comments comments={response.data.comments} />
           )}
         <Sc.CommentForm onSubmit={handleSubmit(handleData)}>
           <Sc.LoggedUserImage src={user.userData.image} />
