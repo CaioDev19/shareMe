@@ -3,6 +3,7 @@ import multer from "multer"
 import { storage } from "../config/multerConfig"
 import {
   createComment,
+  deletePost,
   listPostById,
   listPosts,
   listUserPosts,
@@ -10,6 +11,7 @@ import {
 } from "../controllers/post"
 import {
   checkIfCategoryExists,
+  checkIfPostBelongsToUser,
   checkIfPostExits,
   checkIfThePageExists,
   paginatedResults,
@@ -34,13 +36,15 @@ router
 
 router.get("/detail/:id", checkIfPostExits, listPostById)
 
-router.get(
-  "/:id",
-  doesTheUserExist,
-  checkIfThePageExists,
-  paginatedResults,
-  listUserPosts
-)
+router
+  .route("/:id")
+  .get(
+    doesTheUserExist,
+    checkIfThePageExists,
+    paginatedResults,
+    listUserPosts
+  )
+  .delete(checkIfPostExits, checkIfPostBelongsToUser, deletePost)
 
 router.post(
   "/:id/comment",

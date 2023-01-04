@@ -7,7 +7,7 @@ import {
 } from "../interfaces/express"
 import { getPostsFromDatabase, isInTheDataBase } from "../utils/db"
 import { ValidationPost } from "../validators/postSchema"
-import { Category, Post, PostJoinUser } from "../interfaces/db"
+import { Category, Post, PostJoinUser, User } from "../interfaces/db"
 import knex from "../config/dataBase"
 import { convertToBase64Url } from "../utils/convert"
 import { PostResponse } from "../interfaces/response"
@@ -157,6 +157,28 @@ export async function checkIfPostExits(
 
   if (!response) {
     return res.status(404).json({ mensagem: "Post not found." })
+  }
+
+  return next()
+}
+
+export async function checkIfPostBelongsToUser(
+  req: CustomParamsRequest<{ id?: string }>,
+  res: Response,
+  next: NextFunction
+) {
+  const { id } = req.params
+  const { id: user_id } = <User>req.loggedUser
+
+  const { response } = await isInTheDataBase<Post>(
+    { id: Number(id), user_id },
+    "post"
+  )
+
+  if (!response) {
+    return res
+      .status(403)
+      .json({ mensagem: "Post doesn't belong to the logged user." })
   }
 
   return next()

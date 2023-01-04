@@ -214,3 +214,29 @@ export async function createComment(
     return res.status(500).json({ message: "Server internal error." })
   }
 }
+
+export async function deletePost(
+  req: CustomParamsRequest<{ id?: string }>,
+  res: Response
+) {
+  const { id } = req.params
+  const user = <User>req.loggedUser
+
+  try {
+    const post = await knex<Post>("post")
+      .delete()
+      .where({ id: Number(id) })
+      .andWhere({ user_id: user.id })
+
+    console.log(post)
+    if (!post) {
+      return res
+        .status(500)
+        .json({ message: "Server internal error." })
+    }
+
+    return res.status(204).send()
+  } catch {
+    return res.status(500).json({ message: "Server internal error." })
+  }
+}

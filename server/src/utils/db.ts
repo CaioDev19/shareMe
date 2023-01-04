@@ -25,7 +25,7 @@ export async function isInTheDataBase<T>(
     return {
       response: false,
     }
-  } catch (error) {
+  } catch {
     return {
       response: false,
     }
@@ -56,7 +56,6 @@ export async function getPostsFromDatabase({
     .limit(limit)
     .offset(offset)
     .orderBy("post.id", "desc")
-    .debug(true)
 
   if (typeof id !== "undefined") {
     query = query.where({ user_id: id })
