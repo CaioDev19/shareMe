@@ -2,7 +2,7 @@ import * as Sc from "./style"
 import { Input } from "../../components/Form/Input"
 import { Text } from "../../global/styles/Typography"
 import { Select } from "../../components/Form/Select"
-import { useCategories } from "../../hooks/query/useCategories"
+import { useCategories } from "../../hooks/react-query/query/useCategories"
 import { IoCloudUploadOutline } from "react-icons/io5"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -10,12 +10,12 @@ import { postSchema } from "../../utils/validators/postSchema"
 import { Category } from "../../services/api"
 import { NewPost } from "../../utils/validators/postSchema"
 import { useState } from "react"
-import { FaTrash } from "react-icons/fa"
-import { useCreatePost } from "../../hooks/query/useCreatePost"
+import { useCreatePost } from "../../hooks/react-query/mutation/useCreatePost"
 import Spinner from "react-bootstrap/Spinner"
 import { UserInfo } from "../../components/UserInfo"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
 import { MouseEvent } from "react"
+import { TrashCan } from "../../components/Feed/Post/TrashCan"
 
 export function CreatePost() {
   const { user } = useLoggedUser()
@@ -145,9 +145,7 @@ export function CreatePost() {
           ) : (
             <>
               <Sc.ImageUploaded src={imageBackground} />
-              <Sc.TrashCanContainer onClick={deleteImageBackground}>
-                <FaTrash />
-              </Sc.TrashCanContainer>
+              <TrashCan onClick={deleteImageBackground} />
             </>
           )}
           <Sc.Input

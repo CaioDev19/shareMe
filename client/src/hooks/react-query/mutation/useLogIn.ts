@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { AxiosResponse } from "axios"
-import { logIn, LogIn } from "../../services/api"
+import { logIn, LogIn } from "../../../services/api"
 
 export function useLogIn(
   onSuccess: (response: AxiosResponse<LogIn>) => void,

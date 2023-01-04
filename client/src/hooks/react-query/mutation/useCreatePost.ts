@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
-import { createPost } from "../../services/api"
+import { createPost } from "../../../services/api"
 import { useQueryClient } from "@tanstack/react-query"
-import { useLoggedUser } from "../useLoggedUser"
+import { useLoggedUser } from "../../useLoggedUser"
 
 export function useCreatePost() {
   const queryClient = useQueryClient()

@@ -2,7 +2,7 @@ import { Spinner } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import { UserInfo } from "../../components/UserInfo"
 import { Text } from "../../global/styles/Typography"
-import { useDetailedPost } from "../../hooks/query/useDetailedPost"
+import { useDetailedPost } from "../../hooks/react-query/query/useDetailedPost"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
 import { useNavigate } from "react-router-dom"
 import * as Sc from "./style"
@@ -12,7 +12,7 @@ import {
   commentSchema,
   newComment,
 } from "../../utils/validators/commentSchema"
-import { useCreateComment } from "../../hooks/query/useCreateComment"
+import { useCreateComment } from "../../hooks/react-query/mutation/useCreateComment"
 import { Comments } from "../../components/Comments"
 
 export function PostDetail() {

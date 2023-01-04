@@ -5,7 +5,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md"
 import { Text } from "../../../global/styles/Typography"
 import { Category } from "./Category"
 import { useLoggedUser } from "../../../hooks/useLoggedUser"
-import { useCategories } from "../../../hooks/query/useCategories"
+import { useCategories } from "../../../hooks/react-query/query/useCategories"
 import { useNavigate } from "react-router-dom"
 
 export function SideBar() {

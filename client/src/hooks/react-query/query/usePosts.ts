@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
-import { listUserPosts, listAllPosts } from "../../services/api"
+import { listUserPosts, listAllPosts } from "../../../services/api"
 import { useSignOutOnError } from "./useSignOutOnError"
 
 export function usePosts(userId?: string) {
@@ -15,6 +15,7 @@ export function usePosts(userId?: string) {
       }
       return undefined
     },
+    refetchInterval: 300000,
   })
 
   useEffect(() => {

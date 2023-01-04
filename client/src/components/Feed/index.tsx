@@ -1,7 +1,7 @@
 import { Post } from "../../components/Feed/Post"
 import { Waypoint } from "react-waypoint"
 import * as Sc from "./style"
-import { usePosts } from "../../hooks/query/usePosts"
+import { usePosts } from "../../hooks/react-query/query/usePosts"
 import Spinner from "react-bootstrap/esm/Spinner"
 import { Text } from "../../global/styles/Typography"
 import Masonry from "@mui/lab/Masonry"
@@ -38,7 +38,7 @@ export function Feed({ id }: Props) {
             data.pages.map((page) => {
               return page.data.results.map((post, i) => {
                 return (
-                  <div key={i}>
+                  <div key={post.id}>
                     <Post post={post} />
                     {page.data.results.length - 2 === i && (
                       <Waypoint

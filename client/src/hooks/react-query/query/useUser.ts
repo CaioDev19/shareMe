@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import { listPostById } from "../../services/api"
+import { getUserById } from "../../../services/api"
 import { useSignOutOnError } from "./useSignOutOnError"
 import { useEffect } from "react"
 
-export function useDetailedPost(postId: string) {
-  const query = useQuery(["post", postId], listPostById)
+export function useUser(id: string) {
+  const query = useQuery(["user", id], getUserById)
   const [shouldSignOut, setShouldSignOut] = useSignOutOnError()
 
   useEffect(() => {

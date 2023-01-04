@@ -106,3 +106,7 @@ export function makeComment(config: {
 }): Promise<AxiosResponse<Comment>> {
   return api.post(`/post/${config.postId}/comment`, config.body)
 }
+
+export function deletePost(postId: number): Promise<AxiosResponse> {
+  return api.delete(`/post/${postId}`)
+}

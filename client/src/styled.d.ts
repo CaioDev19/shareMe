@@ -1,3 +1,4 @@
+import "styled-components"
 import { theme } from "./global/theme"
 
 type CustomTheme = typeof theme

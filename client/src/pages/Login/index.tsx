@@ -6,7 +6,7 @@ import { useNavigate, Navigate } from "react-router-dom"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
 import { LogIn } from "../../services/api"
 import { AxiosResponse } from "axios"
-import { useLogIn } from "../../hooks/query/useLogIn"
+import { useLogIn } from "../../hooks/react-query/mutation/useLogIn"
 import { User } from "../../services/api"
 
 export function Login() {

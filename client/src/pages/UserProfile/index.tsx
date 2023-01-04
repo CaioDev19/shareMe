@@ -6,7 +6,7 @@ import { IoMdLogOut } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import * as Sc from "./style"
 import { Feed } from "../../components/Feed"
-import { useUser } from "../../hooks/query/useUser"
+import { useUser } from "../../hooks/react-query/query/useUser"
 
 export function UserProfile() {
   const { id } = useParams()

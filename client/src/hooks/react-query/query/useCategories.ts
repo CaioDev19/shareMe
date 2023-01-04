@@ -1,10 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
-import { getUserById } from "../../services/api"
+import { listCategories } from "../../../services/api"
 import { useSignOutOnError } from "./useSignOutOnError"
 import { useEffect } from "react"
 
-export function useUser(id: string) {
-  const query = useQuery(["user", id], getUserById)
+export function useCategories() {
+  const query = useQuery(["category"], listCategories, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  })
   const [shouldSignOut, setShouldSignOut] = useSignOutOnError()
 
   useEffect(() => {

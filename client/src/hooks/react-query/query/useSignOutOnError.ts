@@ -1,4 +1,4 @@
-import { useLoggedUser } from "../useLoggedUser"
+import { useLoggedUser } from "../../useLoggedUser"
 import { useState, useEffect, Dispatch } from "react"
 import { useNavigate } from "react-router-dom"
 
