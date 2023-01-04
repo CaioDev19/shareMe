@@ -223,13 +223,20 @@ export async function deletePost(
   const user = <User>req.loggedUser
 
   try {
-    const post = await knex<Post>("post")
+    const deletedComments = await knex<Comment>("comment")
+      .delete()
+      .where({ post_id: Number(id) })
+
+    const deletedPost = await knex<Post>("post")
       .delete()
       .where({ id: Number(id) })
       .andWhere({ user_id: user.id })
+      .returning("*")
 
-    console.log(post)
-    if (!post) {
+    if (
+      typeof deletedPost === "undefined" ||
+      typeof deletedComments === "undefined"
+    ) {
       return res
         .status(500)
         .json({ message: "Server internal error." })
