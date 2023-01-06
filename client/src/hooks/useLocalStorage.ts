@@ -24,7 +24,7 @@ function getLocalStorageValue<T>(
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T
+  initialValue: T | (() => T) = "" as T
 ): [T, Dispatch<React.SetStateAction<T>>, () => void] {
   const [value, setValue] = useState(() => {
     return getLocalStorageValue(key, initialValue)
