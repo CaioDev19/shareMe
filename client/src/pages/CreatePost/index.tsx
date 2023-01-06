@@ -101,7 +101,7 @@ export function CreatePost() {
       setimageBackground(`${fileContent}`)
     }
   }
-
+  console.log("first commit")
   function deleteImageBackground(
     e: MouseEvent<HTMLDivElement>
   ): void {
