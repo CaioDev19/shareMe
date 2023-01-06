@@ -9,20 +9,22 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { postSchema } from "../../utils/validators/postSchema"
 import { Category } from "../../services/api"
 import { NewPost } from "../../utils/validators/postSchema"
-import { useState } from "react"
 import { useCreatePost } from "../../hooks/react-query/mutation/useCreatePost"
 import Spinner from "react-bootstrap/Spinner"
 import { UserInfo } from "../../components/UserInfo"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
-import { MouseEvent } from "react"
 import { TrashCan } from "../../components/Feed/Post/TrashCan"
+import { useImageAsBackground } from "../../hooks/useImageAsBackground"
 
 export function CreatePost() {
   const { user } = useLoggedUser()
-  const [imageBackground, setimageBackground] = useState<string>("")
-  const [isImageBeingUploaded, setIsImageBeingUploaded] =
-    useState<boolean>(false)
-  const [isFileError, setIsFileError] = useState<boolean>(false)
+  const {
+    image,
+    isLoading: isImageLoading,
+    isError,
+    addImage,
+    removeImage,
+  } = useImageAsBackground()
   const { data: categories, isSuccess } = useCategories()
   const {
     handleSubmit,
@@ -69,61 +71,19 @@ export function CreatePost() {
     }
   }
 
-  function addImageBackground(): void {
-    const validImageTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/svg+xml",
-      "image/gif",
-      "iamge/svg",
-      "image/tiff",
-    ]
-
-    const image = watch("image")
-    if (image.length === 0) {
-      return
-    }
-
-    if (!validImageTypes.includes(image[0].type)) {
-      setIsFileError(true)
-      return
-    }
-
-    setIsFileError(false)
-    setIsImageBeingUploaded(true)
-
-    const reader = new FileReader()
-
-    reader.readAsDataURL(image[0])
-    reader.onload = function () {
-      const fileContent = reader.result
-      setIsImageBeingUploaded(false)
-      setimageBackground(`${fileContent}`)
-    }
-  }
-  console.log("first commit")
-  function deleteImageBackground(
-    e: MouseEvent<HTMLDivElement>
-  ): void {
-    e.preventDefault()
-
-    setimageBackground("")
-    resetField("image")
-  }
-
   return (
     <Sc.Form onSubmit={handleSubmit(handleData, handleError)}>
       <Sc.LeftContent>
-        <Sc.InnerWrapper noPadding={!!imageBackground}>
-          {isImageBeingUploaded && (
+        <Sc.InnerWrapper noPadding={!!image}>
+          {isImageLoading && (
             <Spinner as="div" animation="border" variant="danger" />
           )}
-          {isFileError && (
+          {isError && (
             <Text type="span" as="span" size="rgl" color="red">
               File type not supported
             </Text>
           )}
-          {!imageBackground ? (
+          {!image ? (
             <>
               <Sc.IconContainer>
                 <IoCloudUploadOutline />
@@ -144,15 +104,23 @@ export function CreatePost() {
             </>
           ) : (
             <>
-              <Sc.ImageUploaded src={imageBackground} />
-              <TrashCan onClick={deleteImageBackground} />
+              <Sc.ImageUploaded src={image} />
+              <TrashCan
+                onClick={(e) => {
+                  removeImage(e)
+                  resetField("image")
+                }}
+              />
             </>
           )}
           <Sc.Input
             type="file"
             name="image"
             control={control}
-            handleChange={addImageBackground}
+            handleChange={() => {
+              const image = watch("image") as FileList
+              addImage(image)
+            }}
           />
         </Sc.InnerWrapper>
       </Sc.LeftContent>
