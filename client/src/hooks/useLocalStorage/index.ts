@@ -6,12 +6,8 @@ function getLocalStorageValue<T>(
 ): T {
   const localStorageString = localStorage.getItem(key)
 
-  let localStorageValue: any
   if (typeof localStorageString === "string") {
-    localStorageValue = JSON.parse(localStorageString)
-  }
-
-  if (localStorageValue) {
+    const localStorageValue = JSON.parse(localStorageString)
     return localStorageValue
   }
 
@@ -33,6 +29,7 @@ export function useLocalStorage<T>(
   const remove = useCallback(
     function (): void {
       localStorage.removeItem(key)
+      setValue("" as T)
     },
     [key]
   )

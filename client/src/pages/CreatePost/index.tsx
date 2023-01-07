@@ -118,7 +118,7 @@ export function CreatePost() {
             name="image"
             control={control}
             handleChange={() => {
-              const image = watch("image") as FileList
+              const image = watch("image") as File[]
               addImage(image)
             }}
           />
