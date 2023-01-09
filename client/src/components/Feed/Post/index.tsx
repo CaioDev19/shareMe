@@ -1,6 +1,6 @@
 import * as Sc from "./style"
 import { UserInfo } from "../../UserInfo"
-import { Post as IPost } from "../../../services/api"
+import { Post as IPost } from "../../../hooks/useRequests"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useLoggedUser } from "../../../hooks/useLoggedUser"

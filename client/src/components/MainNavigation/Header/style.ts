@@ -1,12 +1,39 @@
 import styled from "styled-components"
 
 export const Container = styled.header`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+
+  @media (max-width: 800px) {
+    align-items: center;
+  }
+`
+
+export const ContainerSearch = styled.div`
   position: relative;
   display: flex;
   gap: 0.85rem;
 
   margin-bottom: 2.5rem;
   width: 100%;
+
+  @media (max-width: 800px) {
+    width: 95%;
+  }
+`
+
+export const Banner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+
+  background-color: ${({ theme }) => theme.COLORS.white};
+  box-shadow: 0px 7px 5px -6px rgba(0, 0, 0, 0.5);
 `
 
 export const WrapperIcons = styled.div`
@@ -61,4 +88,13 @@ export const Input = styled.input`
     color: ${({ theme }) => theme.COLORS.gray_200};
     opacity: 0.5;
   }
+`
+export const Logo = styled.img`
+  width: 130px;
+  cursor: pointer;
+`
+
+export const HamburguerIcon = styled.svg`
+  font-size: 2.5rem;
+  cursor: pointer;
 `

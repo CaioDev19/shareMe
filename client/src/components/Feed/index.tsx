@@ -30,7 +30,7 @@ export function Feed({ id }: Props) {
       <Sc.Container>
         <Masonry
           columns={{ xs: 1, md: 3, xl: 4 }}
-          spacing={2}
+          spacing={{ xs: 4, md: 2, xl: 2 }}
           defaultColumns={4}
           defaultSpacing={2}
         >

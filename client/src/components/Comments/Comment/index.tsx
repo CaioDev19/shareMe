@@ -1,5 +1,5 @@
 import * as Sc from "./style"
-import { Comment as IComment } from "../../../services/api"
+import { Comment as IComment } from "../../../hooks/useRequests"
 import { UserInfo } from "../../UserInfo"
 import { useNavigate } from "react-router-dom"
 import { Text } from "../../../global/styles/Typography"

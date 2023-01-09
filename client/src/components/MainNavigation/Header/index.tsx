@@ -9,7 +9,7 @@ export function Header() {
   const navigate = useNavigate()
 
   return (
-    <Sc.Container>
+    <Sc.ContainerSearch>
       <Sc.SearchIcon as={BiSearchAlt2} />
       <Sc.Input type="text" placeholder="Search" />
       <Sc.WrapperIcons>
@@ -27,6 +27,6 @@ export function Header() {
           <Sc.AddIcon as={AiOutlinePlus} />
         </Sc.AddIconWrapper>
       </Sc.WrapperIcons>
-    </Sc.Container>
+    </Sc.ContainerSearch>
   )
 }

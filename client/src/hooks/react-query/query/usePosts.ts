@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
-import { listUserPosts, listAllPosts } from "../../../services/api"
+import { useRequests } from "../../useRequests"
 import { useSignOutOnError } from "./useSignOutOnError"
 
 export function usePosts(userId?: string) {
+  const { listUserPosts, listAllPosts } = useRequests()
   const queryKey = userId ? ["posts", userId] : ["posts"]
   const queryFn = userId ? listUserPosts : listAllPosts
 

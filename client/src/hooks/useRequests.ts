@@ -47,7 +47,7 @@ export interface Posts {
   results: Post[]
 }
 
-interface QueryRequest {
+export interface QueryRequest {
   pageParam?: number
   queryKey: string[]
 }
