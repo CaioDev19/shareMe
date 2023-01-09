@@ -6,7 +6,6 @@ import { Form } from "../../components/Form"
 export const Container = styled.div`
   width: 95%;
   max-width: 1635px;
-  min-width: 845px;
 
   margin: 0 auto;
 
@@ -21,7 +20,6 @@ export const Container = styled.div`
   @media (max-width: 1250px) {
     flex-direction: column;
     justify-content: center;
-    min-width: 550px;
   }
 `
 export const LeftContent = styled.div`

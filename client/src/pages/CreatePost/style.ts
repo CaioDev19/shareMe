@@ -16,7 +16,7 @@ export const Form = styled(StyledForm)`
   align-items: center;
   gap: 1rem;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
     justify-content: center;
 
@@ -29,7 +29,7 @@ export const LeftContent = styled.div`
   align-self: stretch;
   background-color: ${({ theme }) => theme.COLORS.gray};
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     width: 100%;
     padding: 0.75rem;
   }
@@ -53,7 +53,7 @@ export const InnerWrapper = styled.label<{ noPadding: boolean }>`
 
   position: relative;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     width: 100%;
     min-height: 40vh;
   }
@@ -88,7 +88,7 @@ export const RightContent = styled.div`
   flex-direction: column;
   gap: 40px;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     width: 100%;
   }
 `
