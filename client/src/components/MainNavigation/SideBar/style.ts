@@ -8,7 +8,7 @@ export const StyledSideBar = styled.div`
   height: 100vh;
 
   margin-right: 0;
-  padding: 1.25rem 0;
+  padding: 1.25rem 0 1.25rem 1rem;
 
   display: flex;
   flex-direction: column;
@@ -23,7 +23,8 @@ export const StyledSideBar = styled.div`
 
 export const ContentContainer = styled.div`
   width: 85%;
-  margin: 0 auto;
+  margin-right: 0;
+  margin-bottom: 1.25rem;
 `
 
 export const ContainerCategories = styled.div`
@@ -34,6 +35,7 @@ export const ContainerCategories = styled.div`
 `
 export const Logo = styled.img`
   width: 75%;
+  max-width: 150px;
 `
 
 export const Wrapper = styled.div`
@@ -54,6 +56,7 @@ export const Button = styled(StyledButton)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align-self: flex-start;
 
   svg {
     position: relative;

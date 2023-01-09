@@ -4,17 +4,14 @@ import { MobileHeader } from "./Header/MobileHeader"
 import { SideBar } from "./SideBar"
 import { Outlet } from "react-router-dom"
 import { useWindowDimensions } from "../../hooks/useWindowDimensions"
-import { useState } from "react"
 import { useAuthorization } from "../../hooks/useAuthorization"
+import { useToggle } from "../../hooks/useToggle"
+import { MobileSideBar } from "./SideBar/MobileSideBar"
 
 export function MainNavigation() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, toggle] = useToggle()
   const { width } = useWindowDimensions()
   useAuthorization()
-
-  function handleToggle() {
-    setIsOpen(!isOpen)
-  }
 
   return (
     <Sc.Container>
@@ -27,10 +24,13 @@ export function MainNavigation() {
           </Sc.RightContentWrapper>
         </>
       ) : (
-        <Sc.ContentNoPadding>
-          <MobileHeader handleToggle={handleToggle} />
-          <Outlet />
-        </Sc.ContentNoPadding>
+        <>
+          {isOpen && <MobileSideBar handleToggle={toggle} />}
+          <Sc.ContentNoPadding>
+            <MobileHeader handleToggle={toggle} />
+            <Outlet />
+          </Sc.ContentNoPadding>
+        </>
       )}
     </Sc.Container>
   )

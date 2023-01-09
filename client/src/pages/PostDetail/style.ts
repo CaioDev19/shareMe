@@ -17,10 +17,20 @@ export const Container = styled.div`
   gap: 1rem;
 
   border-radius: 0.5rem;
+
+  @media (max-width: 1250px) {
+    flex-direction: column;
+    justify-content: center;
+    min-width: 550px;
+  }
 `
 export const LeftContent = styled.div`
   height: 100%;
   min-width: 50%;
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `
 
 export const PostImage = styled.img`
@@ -37,6 +47,10 @@ export const RightContent = styled.div`
   flex-grow: 1;
   padding-right: 1.25rem;
   margin-bottom: auto;
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `
 
 export const PostInfoWrapper = styled.div`
