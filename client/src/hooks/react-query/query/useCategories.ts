@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { useSignOutOnError } from "./useSignOutOnError"
 import { useEffect } from "react"
-import { useRequests } from "../../useRequests"
+import { listCategories } from "../../../services/requets"
 
 export function useCategories() {
-  const { listCategories } = useRequests()
   const query = useQuery(["category"], listCategories, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,

@@ -1,5 +1,5 @@
 import * as Sc from "./style"
-import { Category } from "../../../hooks/useRequests"
+import { Category } from "../../../interfaces/api"
 import { Controller } from "react-hook-form"
 import { Control } from "react-hook-form/dist/types"
 

@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query"
 import { useQueryClient } from "@tanstack/react-query"
 import { useLoggedUser } from "../../useLoggedUser"
-import { Posts, Post, useRequests } from "../../useRequests"
+import { Posts, Post } from "../../../interfaces/api"
+import { deletePost } from "../../../services/requets"
 import { AxiosResponse } from "axios"
 
 export const useDeletePost = (id: number) => {
-  const { deletePost } = useRequests()
   const queryClient = useQueryClient()
   const { user } = useLoggedUser()
   return useMutation(deletePost, {

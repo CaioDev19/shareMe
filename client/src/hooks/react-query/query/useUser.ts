@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { useSignOutOnError } from "./useSignOutOnError"
 import { useEffect } from "react"
-import { useRequests } from "../../useRequests"
+import { getUserById } from "../../../services/requets"
 
 export function useUser(id: string) {
-  const { getUserById } = useRequests()
   const query = useQuery(["user", id], getUserById)
   const [shouldSignOut, setShouldSignOut] = useSignOutOnError()
 

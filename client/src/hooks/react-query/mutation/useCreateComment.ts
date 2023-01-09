@@ -1,9 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useMutation } from "@tanstack/react-query"
-import { useRequests } from "../../useRequests"
+import { createComment } from "../../../services/requets"
 
 export function useCreateComment(id: string) {
-  const { createComment } = useRequests()
   const queryClient = useQueryClient()
 
   return useMutation(createComment, {

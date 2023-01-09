@@ -5,10 +5,12 @@ import { SideBar } from "./SideBar"
 import { Outlet } from "react-router-dom"
 import { useWindowDimensions } from "../../hooks/useWindowDimensions"
 import { useState } from "react"
+import { useAuthorization } from "../../hooks/useAuthorization"
 
 export function MainNavigation() {
   const [isOpen, setIsOpen] = useState(false)
   const { width } = useWindowDimensions()
+  useAuthorization()
 
   function handleToggle() {
     setIsOpen(!isOpen)

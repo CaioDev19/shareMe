@@ -4,10 +4,9 @@ import backgroundVideo from "../../assets/share.mp4"
 import logoWhite from "../../assets/logowhite.png"
 import { useNavigate, Navigate } from "react-router-dom"
 import { useLoggedUser } from "../../hooks/useLoggedUser"
-import { LogIn } from "../../hooks/useRequests"
+import { LogIn, User } from "../../interfaces/api"
 import { AxiosResponse } from "axios"
 import { useLogIn } from "../../hooks/react-query/mutation/useLogIn"
-import { User } from "../../hooks/useRequests"
 
 export function Login() {
   const navigate = useNavigate()

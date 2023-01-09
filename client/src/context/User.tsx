@@ -1,6 +1,6 @@
 import { createContext, useMemo, useCallback } from "react"
 import { useLocalStorage } from "../hooks/useLocalStorage"
-import { User } from "../hooks/useRequests"
+import { User } from "../interfaces/api"
 
 interface Props {
   children: JSX.Element

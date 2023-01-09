@@ -1,4 +1,4 @@
-import { Comment as IComment } from "../../hooks/useRequests"
+import { Comment as IComment } from "../../interfaces/api"
 import { Comment } from "./Comment"
 import * as Sc from "./style"
 
