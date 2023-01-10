@@ -13,7 +13,7 @@ type PostData = z.infer<typeof postSchmea>["body"]["data"]
 export interface Post extends PostData {
   id: number
   image_name: string
-  image: Buffer | string
+  image: string
   user_id: string
 }
 

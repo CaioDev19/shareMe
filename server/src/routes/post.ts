@@ -1,6 +1,5 @@
 import express from "express"
-import multer from "multer"
-import { storage } from "../config/multerConfig"
+import { upload } from "../config/multerConfig"
 import {
   createComment,
   deletePost,
@@ -22,7 +21,6 @@ import { commentSchema } from "../validators/commentSchema"
 import { postSchmea } from "../validators/postSchema"
 
 const router: express.Router = express.Router()
-const upload = multer({ storage })
 
 router
   .route("/")

@@ -9,7 +9,6 @@ import { getPostsFromDatabase, isInTheDataBase } from "../utils/db"
 import { ValidationPost } from "../validators/postSchema"
 import { Category, Post, PostJoinUser, User } from "../interfaces/db"
 import knex from "../config/dataBase"
-import { convertToBase64Url } from "../utils/convert"
 import { PostResponse } from "../interfaces/response"
 
 export async function checkIfCategoryExists(
@@ -108,10 +107,6 @@ export async function paginatedResults(
   if (typeof posts === "undefined") {
     return res.status(500).json({ message: "Server internal error." })
   }
-
-  posts.forEach((post) => {
-    post.image = convertToBase64Url(<Buffer>post.image)
-  })
 
   const results: PostResponse[] = posts.map((post) => {
     return {

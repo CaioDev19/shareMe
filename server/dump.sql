@@ -30,7 +30,7 @@ VALUES
 CREATE TABLE post(
 	id SERIAL PRIMARY KEY,
 	image_name VARCHAR(100) NOT NULL,
-	image BYTEA NOT NULL,
+	image TEXT NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	description VARCHAR(280),
 	user_id TEXT NOT NULL,

@@ -8,8 +8,6 @@ import {
   pagination,
 } from "../interfaces/express"
 import { ValidationPost } from "../validators/postSchema"
-import { convertToBase64Url } from "../utils/convert"
-import { compressFile } from "../utils/file"
 import {
   Post,
   User,
@@ -22,6 +20,8 @@ import {
   PostDetail,
   PostResponse,
 } from "../interfaces/response"
+import { uniqueName } from "../utils/convert"
+import { deleteFile, uploadFile } from "../utils/storage"
 
 export async function makePost(
   req: CustomBodyRequest<ValidationPost>,
@@ -31,13 +31,13 @@ export async function makePost(
   const user = <User>req.loggedUser
 
   try {
-    const imageBuffer = await compressFile(req.file!.path)
+    const image = await uploadFile(req.file!)
 
     const newPost = await knex<Post>("post")
       .insert({
         title,
-        image_name: req.file!.originalname,
-        image: imageBuffer,
+        image_name: image.Key,
+        image: image.Location,
         description: description && description,
         user_id: user.id,
         category_id,
@@ -50,14 +50,12 @@ export async function makePost(
         .json({ message: "Server internal error." })
     }
 
-    newPost[0].image = convertToBase64Url(<Buffer>newPost[0].image)
-
     const response: PostResponse = {
       id: newPost[0].id,
       title: newPost[0].title,
       image: {
         name: newPost[0].image_name,
-        data: newPost[0].image,
+        url: newPost[0].image,
       },
       description: newPost[0].description,
       user,
@@ -131,8 +129,6 @@ export async function listPostById(
         .json({ message: "Server internal error." })
     }
 
-    post.image = convertToBase64Url(<Buffer>post.image)
-
     const formatedComments: commentResponse[] = comments.map(
       (comment) => {
         return {
@@ -153,7 +149,7 @@ export async function listPostById(
       title: post.title,
       image: {
         name: post.image_name,
-        data: post.image,
+        url: post.image,
       },
       description: post.description,
       user: {
@@ -237,6 +233,16 @@ export async function deletePost(
       typeof deletedPost === "undefined" ||
       typeof deletedComments === "undefined"
     ) {
+      return res
+        .status(500)
+        .json({ message: "Server internal error." })
+    }
+
+    const deleteObjectBucket = await deleteFile(
+      deletedPost[0].image_name
+    )
+
+    if (!deleteObjectBucket) {
       return res
         .status(500)
         .json({ message: "Server internal error." })

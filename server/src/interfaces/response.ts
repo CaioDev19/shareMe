@@ -2,7 +2,7 @@ import { User, Category, Comment } from "./db"
 
 type image = {
   name: string
-  data: string
+  url: string
 }
 
 export interface PostResponse {
