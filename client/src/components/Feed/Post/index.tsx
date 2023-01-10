@@ -39,10 +39,10 @@ export function Post({ post }: Props) {
       onMouseOut={() => setMouseOver(false)}
     >
       <Sc.ImageWrapper>
-        <Sc.PostImage src={post.image.data} alt={post.image.name} />
+        <Sc.PostImage src={post.image.url} alt={post.image.name} />
         {mouseOver && (
           <Sc.DowloadButton
-            href={post.image.data}
+            href={post.image.url}
             download
             onClick={(e) => e.stopPropagation()}
           >

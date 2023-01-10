@@ -14,6 +14,7 @@ export const PostImage = styled.img`
 `
 export const ImageWrapper = styled.div`
   position: relative;
+  width: 100%;
 `
 
 export const DeleteButton = styled(TrashCan)`

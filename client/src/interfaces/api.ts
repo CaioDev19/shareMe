@@ -30,7 +30,7 @@ export interface Post {
   user: User
   image: {
     name: string
-    data: string
+    url: string
   }
   comments?: Comment[]
 }
