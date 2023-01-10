@@ -20,7 +20,6 @@ import {
   PostDetail,
   PostResponse,
 } from "../interfaces/response"
-import { uniqueName } from "../utils/convert"
 import { deleteFile, uploadFile } from "../utils/storage"
 
 export async function makePost(
