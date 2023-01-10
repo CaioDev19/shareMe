@@ -46,7 +46,7 @@ export function PostDetail() {
     <Sc.Container>
       <Sc.LeftContent>
         <Sc.PostImage
-          src={response?.data.image.data}
+          src={response?.data.image.url}
           alt={response?.data.image.name}
         />
       </Sc.LeftContent>
