@@ -114,7 +114,7 @@ export async function paginatedResults(
       title: post.title,
       image: {
         name: post.image_name,
-        data: <string>post.image,
+        url: <string>post.image,
       },
       description: post.description,
       user: {
