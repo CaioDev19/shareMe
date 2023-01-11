@@ -3,32 +3,9 @@ import { Button as StyledButton } from "../../global/styles/Button"
 import { Input } from "../../components/Form/Input"
 import { Form } from "../../components/Form"
 
-export const Container = styled.div`
-  width: 95%;
-  max-width: 1635px;
-
-  margin: 0 auto;
-
-  background-color: ${({ theme }) => theme.COLORS.whitesh};
-
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  border-radius: 0.5rem;
-
-  @media (max-width: 1250px) {
-    flex-direction: column;
-    justify-content: center;
-  }
-`
 export const LeftContent = styled.div`
   height: 100%;
   min-width: 50%;
-
-  @media (max-width: 1250px) {
-    width: 100%;
-  }
 `
 
 export const PostImage = styled.img`
@@ -87,4 +64,30 @@ export const CommentInput = styled(Input)`
 `
 export const Button = styled(StyledButton)`
   border-radius: 2rem;
+`
+//prettier-ignore
+export const Container = styled.div`
+  width: 95%;
+  max-width: 1635px;
+
+  margin: 0 auto;
+
+  background-color: ${({ theme }) => theme.COLORS.whitesh};
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  border-radius: 0.5rem;
+
+  @media (max-width: ${({ theme }) => theme.BREAKPOINTS.notbook}px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  ${LeftContent} {
+    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.notbook}px) {
+      width: 100%;
+    }
+  }
 `

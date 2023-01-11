@@ -32,6 +32,11 @@ export const theme = {
     rgl: "1rem",
     lrg: "1.3rem",
   },
+  BREAKPOINTS: {
+    mobile: 800,
+    tablet: 1000,
+    notbook: 1250,
+  },
 }
 
 export type Colors = keyof typeof theme.COLORS

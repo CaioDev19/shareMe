@@ -6,15 +6,17 @@ import { useToggle } from "../../hooks/useToggle"
 import { MobileHeader } from "./Header/MobileHeader"
 import { MobileSideBar } from "./SideBar/MobileSideBar"
 import { useAuthorization } from "../../hooks/useAuthorization"
+import { useTheme } from "styled-components"
 
 export function JustSideBar() {
   const { width } = useWindowDimensions()
   const [isOpen, toggle] = useToggle()
+  const theme = useTheme()
   useAuthorization()
 
   return (
     <Sc.Container>
-      {width && width > 800 ? (
+      {width && width > theme.BREAKPOINTS.mobile ? (
         <>
           <SideBar />
           <Outlet />

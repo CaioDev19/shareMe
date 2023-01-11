@@ -4,7 +4,7 @@ export const Container = styled.div`
   min-height: 100vh;
   padding-left: 14.5rem;
 
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.BREAKPOINTS.mobile}px) {
     padding-left: 0;
   }
 `

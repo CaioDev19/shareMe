@@ -7,15 +7,17 @@ import { useWindowDimensions } from "../../hooks/useWindowDimensions"
 import { useAuthorization } from "../../hooks/useAuthorization"
 import { useToggle } from "../../hooks/useToggle"
 import { MobileSideBar } from "./SideBar/MobileSideBar"
+import { useTheme } from "styled-components"
 
 export function MainNavigation() {
   const [isOpen, toggle] = useToggle()
   const { width } = useWindowDimensions()
+  const theme = useTheme()
   useAuthorization()
 
   return (
     <Sc.Container>
-      {width && width > 800 ? (
+      {width && width > theme.BREAKPOINTS.mobile ? (
         <>
           <SideBar />
           <Sc.RightContentWrapper>

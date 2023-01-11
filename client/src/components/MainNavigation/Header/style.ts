@@ -1,16 +1,5 @@
 import styled from "styled-components"
 
-export const Container = styled.header`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-
-  @media (max-width: 800px) {
-    align-items: center;
-  }
-`
-
 export const ContainerSearch = styled.div`
   position: relative;
   display: flex;
@@ -18,10 +7,6 @@ export const ContainerSearch = styled.div`
 
   margin-bottom: 2.5rem;
   width: 100%;
-
-  @media (max-width: 800px) {
-    width: 95%;
-  }
 `
 
 export const Banner = styled.div`
@@ -87,5 +72,21 @@ export const Input = styled.input`
     line-height: 1.3rem;
     color: ${({ theme }) => theme.COLORS.gray_200};
     opacity: 0.5;
+  }
+`
+export const Container = styled.header`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.BREAKPOINTS.mobile}px) {
+    align-items: center;
+  }
+
+  ${ContainerSearch} {
+    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.mobile}px) {
+      width: 95%;
+    }
   }
 `

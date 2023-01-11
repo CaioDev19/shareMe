@@ -3,36 +3,11 @@ import { Form as StyledForm } from "../../components/Form"
 import { Button as StyledButton } from "../../global/styles/Button"
 import { Input as StyledInput } from "../../components/Form/Input"
 
-export const Form = styled(StyledForm)`
-  width: 80%;
-  max-width: 1125px;
-
-  margin: 0 auto;
-  padding: 1.45rem 1rem;
-
-  background-color: ${({ theme }) => theme.COLORS.whitesh};
-
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  @media (max-width: 1000px) {
-    flex-direction: column;
-    justify-content: center;
-
-    width: 100%;
-  }
-`
 export const LeftContent = styled.div`
   width: 40%;
   padding: 0.75rem 0;
   align-self: stretch;
   background-color: ${({ theme }) => theme.COLORS.gray};
-
-  @media (max-width: 1000px) {
-    width: 100%;
-    padding: 0.75rem;
-  }
 `
 
 export const InnerWrapper = styled.label<{ noPadding: boolean }>`
@@ -52,11 +27,6 @@ export const InnerWrapper = styled.label<{ noPadding: boolean }>`
   justify-content: space-evenly;
 
   position: relative;
-
-  @media (max-width: 1000px) {
-    width: 100%;
-    min-height: 40vh;
-  }
 `
 
 export const Input = styled(StyledInput)`
@@ -87,10 +57,6 @@ export const RightContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
-
-  @media (max-width: 1000px) {
-    width: 100%;
-  }
 `
 
 export const Button = styled(StyledButton)`
@@ -108,4 +74,44 @@ export const WrapperErrorButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`
+
+export const Form = styled(StyledForm)`
+  width: 80%;
+  max-width: 1125px;
+
+  margin: 0 auto;
+  padding: 1.45rem 1rem;
+
+  background-color: ${({ theme }) => theme.COLORS.whitesh};
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  ${LeftContent} {
+    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+      width: 100%;
+      padding: 0.75rem;
+    }
+  }
+
+  ${InnerWrapper} {
+    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+      width: 100%;
+      min-height: 40vh;
+    }
+  }
+
+  ${RightContent} {
+    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+      width: 100%;
+    }
+  }
 `

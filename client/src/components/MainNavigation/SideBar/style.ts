@@ -57,6 +57,7 @@ export const Button = styled(StyledButton)`
   justify-content: space-between;
   align-items: center;
   align-self: flex-start;
+  gap: 1rem;
 
   svg {
     position: relative;
