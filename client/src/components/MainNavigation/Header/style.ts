@@ -82,10 +82,8 @@ export const Container = styled.header`
 
   @media (max-width: ${({ theme }) => theme.BREAKPOINTS.mobile}px) {
     align-items: center;
-  }
 
-  ${ContainerSearch} {
-    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.mobile}px) {
+    ${ContainerSearch} {
       width: 95%;
     }
   }

@@ -22,10 +22,6 @@ export const RightContent = styled.div`
   flex-grow: 1;
   padding-right: 1.25rem;
   margin-bottom: auto;
-
-  @media (max-width: 1250px) {
-    width: 100%;
-  }
 `
 
 export const PostInfoWrapper = styled.div`
@@ -65,7 +61,7 @@ export const CommentInput = styled(Input)`
 export const Button = styled(StyledButton)`
   border-radius: 2rem;
 `
-//prettier-ignore
+
 export const Container = styled.div`
   width: 95%;
   max-width: 1635px;
@@ -83,10 +79,12 @@ export const Container = styled.div`
   @media (max-width: ${({ theme }) => theme.BREAKPOINTS.notbook}px) {
     flex-direction: column;
     justify-content: center;
-  }
 
-  ${LeftContent} {
-    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.notbook}px) {
+    ${RightContent} {
+      width: 100%;
+    }
+
+    ${LeftContent} {
       width: 100%;
     }
   }

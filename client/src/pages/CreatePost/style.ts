@@ -93,24 +93,18 @@ export const Form = styled(StyledForm)`
     flex-direction: column;
     justify-content: center;
     width: 100%;
-  }
 
-  ${LeftContent} {
-    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+    ${LeftContent} {
       width: 100%;
       padding: 0.75rem;
     }
-  }
 
-  ${InnerWrapper} {
-    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+    ${InnerWrapper} {
       width: 100%;
       min-height: 40vh;
     }
-  }
 
-  ${RightContent} {
-    @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+    ${RightContent} {
       width: 100%;
     }
   }
