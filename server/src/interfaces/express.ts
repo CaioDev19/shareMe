@@ -66,3 +66,7 @@ export type pagination = {
   page?: string
   limit?: string
 }
+
+export type filter = {
+  categoryId?: string
+}

@@ -33,15 +33,18 @@ export async function isInTheDataBase<T>(
 }
 
 interface FuncProps {
-  id?: string
   limit: number
   offset: number
+  condition?: {
+    id?: number
+    category_id?: string
+  }
 }
 
 export async function getPostsFromDatabase({
-  id,
   limit,
   offset,
+  condition,
 }: FuncProps): Promise<PostJoinUser[]> {
   let query = knex<PostJoinUser>("post")
     .select(
@@ -53,13 +56,10 @@ export async function getPostsFromDatabase({
     )
     .innerJoin("category", "category.id", "post.category_id")
     .innerJoin("user", "user.id", "post.user_id")
+    .where(condition ? condition : {})
     .limit(limit)
     .offset(offset)
     .orderBy("post.id", "desc")
-
-  if (typeof id !== "undefined") {
-    query = query.where({ user_id: id })
-  }
 
   return await query
 }

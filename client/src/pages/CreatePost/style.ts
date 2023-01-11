@@ -89,7 +89,7 @@ export const Form = styled(StyledForm)`
   align-items: center;
   gap: 1rem;
 
-  @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}) {
+  @media (max-width: ${({ theme }) => theme.BREAKPOINTS.tablet}px) {
     flex-direction: column;
     justify-content: center;
     width: 100%;

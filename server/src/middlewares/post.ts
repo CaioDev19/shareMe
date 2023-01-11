@@ -4,6 +4,7 @@ import {
   CustomParamsQueryRequest,
   pagination,
   CustomParamsRequest,
+  filter,
 } from "../interfaces/express"
 import { getPostsFromDatabase, isInTheDataBase } from "../utils/db"
 import { ValidationPost } from "../validators/postSchema"
@@ -32,12 +33,14 @@ export async function checkIfCategoryExists(
 }
 
 export async function checkIfThePageExists(
-  req: CustomParamsQueryRequest<{ id?: string }, pagination>,
+  req: CustomParamsQueryRequest<{ id?: string }, pagination & filter>,
   res: Response,
   next: NextFunction
 ) {
   const page = req.query.page ? Number(req.query.page) : null
   const limit = Number(req.query.limit) || 10
+  const { categoryId } = req.query
+  const category = Number(categoryId)
   const { id } = req.params
 
   let totalPosts:
@@ -47,19 +50,27 @@ export async function checkIfThePageExists(
     | undefined
 
   if (typeof id !== "undefined") {
+    const condition =
+      category && category !== 0
+        ? { user_id: id, category_id: categoryId }
+        : { user_id: id }
+
     totalPosts = <
       | {
           count: string
         }
       | undefined
-    >await knex<Post>("post").where({ user_id: id }).count("*").first()
+    >await knex<Post>("post").where(condition).count("*").first()
   } else {
+    const condition =
+      category && category !== 0 ? { category_id: categoryId } : {}
+
     totalPosts = <
       | {
           count: string
         }
       | undefined
-    >await knex<Post>("post").count("*").first()
+    >await knex<Post>("post").where(condition).count("*").first()
   }
 
   if (typeof totalPosts === "undefined") {
@@ -82,12 +93,14 @@ export async function checkIfThePageExists(
 }
 
 export async function paginatedResults(
-  req: CustomParamsQueryRequest<{ id?: string }, pagination>,
+  req: CustomParamsQueryRequest<{ id?: string }, pagination & filter>,
   res: Response,
   next: NextFunction
 ) {
   const page = Number(req.query.page) || 1
   const limit = Number(req.query.limit) || 10
+  const { categoryId } = req.query
+  const category = Number(categoryId)
   const totalPages = <number>req.totalPages
   const offset = (page - 1) * limit
   const { id } = req.params
@@ -96,9 +109,17 @@ export async function paginatedResults(
 
   try {
     if (typeof id !== "undefined") {
-      posts = await getPostsFromDatabase({ id, limit, offset })
+      const condition =
+        category && category !== 0
+          ? { user_id: id, category_id: categoryId }
+          : { user_id: id }
+
+      posts = await getPostsFromDatabase({ condition, limit, offset })
     } else {
-      posts = await getPostsFromDatabase({ limit, offset })
+      const condition =
+        category && category !== 0 ? { category_id: categoryId } : {}
+
+      posts = await getPostsFromDatabase({ limit, offset, condition })
     }
   } catch {
     return res.status(500).json({ message: "Server internal error." })
